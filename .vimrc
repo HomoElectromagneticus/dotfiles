@@ -7,34 +7,29 @@ set nocompatible                "in compatible mode, lots of plugins don't work
 filetype off
 
 " set the runtime path to include Vundle, fzf, and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+"set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=/usr/local/opt/fzf
-call vundle#begin()
+call plug#begin()
 
-" let Vundle handle Vundle and plugins. Add / enable plugins by adding
+" let vim-plug handle and plugins. Add / enable plugins by adding
 " `Plugin 'blahblah/blahblah'` here
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'fladson/vim-kitty'      "syntax highlighting for kitty.conf
-Plugin 'airblade/vim-gitgutter' "a gutter with git add/del/mod markers
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tpope/vim-vinegar'      "improves netrw (file browser) a bit
-Plugin 'ziglang/zig.vim'        "official zig plugin
-Plugin 'junegunn/fzf.vim'       "fuzzy finder vim integration
+Plug 'fladson/vim-kitty'        "syntax highlighting for kitty.conf
+Plug 'mhinz/vim-signify', { 'tag': 'legacy' }
+Plug 'altercation/vim-colors-solarized'
+Plug 'tpope/vim-vinegar'        "improves netrw (file browser) a bit
+Plug 'ziglang/zig.vim'          "official zig plugin
+Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration
+Plug 'tpope/vim-fugitive'       "git functions in vim
+Plug 'lifepillar/vim-mucomplete'
+Plug 'ap/vim-buftabline'        "show buffers at top of window
 
 " All of your Plugins must be added before the following line
-call vundle#end()               "required
+call plug#end()                 "required
 filetype plugin indent on       "required (re-enables filetype detection etc.)
 
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
+
 " Put your non-Plugin stuff after this line
 
 " set encoding to UTF-8
@@ -53,8 +48,24 @@ noremap k gk
 vmap j gj
 vmap k gk
 
-" status bar stuff
-set ruler	          "always show the current position in the file
+" Status line stuff. Nothing fancy!
+" Stolen from: https://github.com/nickjj/dotfiles/blob/master/.vimrc 
+function! s:statusline_expr()
+  let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
+  let ro  = "%{&readonly ? '[RO] ' : ''}"
+  let ft  = "%{len(&filetype) ? '['.&filetype.'] ' : ''}"
+  let fug = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
+  let sep = ' %= '
+  let pos = ' %-12(%l : %c%V%) '
+  let pct = ' %P'
+
+  " buffer no., filepath, modified?, read-only, filetype, git branch (if
+  " relevant), empty space, position in file, percent in file
+  return '[%n] %f %<'.mod.ro.ft.fug.sep.pos.'%*'.pct
+endfunction
+
+let &statusline = s:statusline_expr()
+
 set laststatus=2	  "always show the statusbar
 
 " enable syntax highlighting and the official solarized colors
@@ -104,8 +115,9 @@ set listchars=eol:⏎,tab:▷·,trail:·
 set hidden
 
 " Tab completion for opening files etc
-set wildmode=longest,list,full
+"set wildmode=longest,list,full
 set wildmenu
+set wildignorecase
 
 " Cursor config
 let &t_EI="\<Esc>[1 q"     "normal mode: blinking block
@@ -120,22 +132,59 @@ set colorcolumn=80
 set showbreak=↳\           "use this funny arrow character and a space to show
                            "linebreaks when they happen
 set breakindent            "try to follow indenting when soft wrapping
+set nowrap                 "do not soft wrap lines by default
 
-" vim-gitgutter config stuff
-set updatetime=400        "git gutter stuff will update every 400ms
+"" vim-gitgutter config stuff
+set updatetime=400                      "vcs gutter will update every 400ms
 " make the SignColumn colors nicer
 highlight SignColumn guibg=lightgrey ctermbg=lightgrey
-set signcolumn=yes        "always show the SignColumn
+set signcolumn=yes                      "always show the SignColumn
+let g:signify_sign_show_count = 0       "don't know the number of del'd lines
+let g:signify_sign_change = '~'         "use ~ to show a changed line
 
 " Netrw (vim's file explorer) settings
 " Ensure the working directory and the browsing directory are the same
 let g:netrw_keepdir = 1
 " Use the 'tree' listing as the default
 let g:netrw_liststyle = 3
-" Sets the default size of netrw when opened
+" Sets the default size of netrw when opened as a new split
 let g:netrw_winsize = 28
+
+" Buftabline settings
+let g:buftabline_numbers = 1            "show buffer number
 
 " zig plugin settings
 " disable automatic formatting on save (for the time being!)
 let g:zig_fmt_autosave = 0
 
+" completion settings
+set completeopt+=menuone                 "mandatory for vim-mucomplete
+set completeopt+=popup  	         "show extra completion details
+set completeopt+=noselect                "auto-insert a completion only after
+                                         "i select one
+" force vim-mucomplete to obey vim's completeopt settings
+let g:mucomplete#always_use_completeopt = 1
+let g:mucomplete#no_mappings = 1	 "define no mappings
+" the next two automatically show completions after 350ms of not typing
+let g:mucomplete#enable_auto_at_startup = 1
+let g:mucomplete#completion_delay = 350
+set shortmess+=c                         "shut off completion messages
+let g:mucomplete#spel#max = 8	         "show max. 8 dictionary options 
+set complete-=i                          "prevent some hangs for completions
+" turn on minimal completion based on existing syntax highlighting if the
+" filetype does not have an omni function already defined
+if has("autocmd") && exists("+omnifunc")
+autocmd Filetype *
+    \	if &omnifunc == "" |
+    \		setlocal omnifunc=syntaxcomplete#Complete |
+    \	endif
+endif
+" setup mucompletion 'chains'
+" this is the default chain, very simple:
+"let g:mucomplete#chains = { 'default': ['path', 'keyn'] }
+let g:mucomplete#chains = {
+    \ 'default': { 'default': ['path', 'omni', 'keyn', 'uspl'],
+    \              '.*string.*': ['uspl', 'dict'],
+    \              '.*comment.*': ['uspl', 'dict'], },
+    \ 'vim':     { 'default': ['path', 'cmd', 'keyn', 'uspl'] }
+    \ }
