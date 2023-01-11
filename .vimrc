@@ -15,13 +15,13 @@ call plug#begin()
 Plug 'fladson/vim-kitty'        "syntax highlighting for kitty.conf
 Plug 'mhinz/vim-signify', { 'tag': 'legacy' }
 Plug 'altercation/vim-colors-solarized'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'tpope/vim-vinegar'        "improves netrw (file browser) a bit
 Plug 'ziglang/zig.vim'          "official zig plugin
 Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration
 Plug 'tpope/vim-fugitive'       "git functions in vim
-"Plug 'lifepillar/vim-mucomplete'
 Plug 'ap/vim-buftabline'        "show buffers at top of window
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}     "fancy completion
 
 " All of your Plugins must be added before the following line
 call plug#end()                 "required
@@ -113,7 +113,6 @@ set listchars=eol:⏎,tab:▷·,trail:·
 set hidden
 
 " Tab completion for opening files etc
-"set wildmode=longest,list,full
 set wildmenu
 set wildignorecase
 
@@ -154,38 +153,6 @@ let g:buftabline_numbers = 1            "show buffer number for ez navigation
 " zig plugin settings
 " disable automatic formatting on save (for the time being!)
 let g:zig_fmt_autosave = 0
-
-"" completion settings
-"set completeopt+=menuone                 "mandatory for vim-mucomplete
-"set completeopt+=popup  	         "show extra completion details
-"set completeopt+=noselect                "auto-insert a completion only after
-"                                         "i select one
-"" force vim-mucomplete to obey vim's completeopt settings
-"let g:mucomplete#always_use_completeopt = 1
-"let g:mucomplete#no_mappings = 1	 "define no mappings
-"" the next two automatically show completions after 350ms of not typing
-"let g:mucomplete#enable_auto_at_startup = 1
-"let g:mucomplete#completion_delay = 350
-"set shortmess+=c                         "shut off completion messages
-"let g:mucomplete#spel#max = 8	         "show max. 8 dictionary options 
-"set complete-=i                          "prevent some hangs for completions
-"" turn on minimal completion based on existing syntax highlighting if the
-"" filetype does not have an omni function already defined
-"if has("autocmd") && exists("+omnifunc")
-"autocmd Filetype *
-"    \	if &omnifunc == "" |
-"    \		setlocal omnifunc=syntaxcomplete#Complete |
-"    \	endif
-"endif
-"" setup mucompletion 'chains'
-"" this is the default chain, very simple:
-""let g:mucomplete#chains = { 'default': ['path', 'keyn'] }
-"let g:mucomplete#chains = {
-"    \ 'default': { 'default': ['path', 'omni', 'keyn', 'uspl'],
-"    \              '.*string.*': ['uspl', 'dict'],
-"    \              '.*comment.*': ['uspl', 'dict'], },
-"    \ 'vim':     { 'default': ['path', 'cmd', 'keyn', 'uspl'] }
-"    \ }
 
 " Conqueror of completion config (note that a lot of Coc's settings are 
 " in ~/.vim/coc-settings.json and json files can't really be commented)
