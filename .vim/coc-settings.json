@@ -1,0 +1,17 @@
+{
+  "languageserver": {
+    "zig": {
+      "command": "/usr/local/bin/zls",
+      "zig.path": "zls",
+      "zig.enabled": true,
+      "zig.startUpMessage": true,
+      "rootPatterns": ["build.zig"],
+      "trace.server": "verbose",
+      "filetypes": ["zig"]
+    }
+  },
+  "suggest.noselect": true,
+  "inlayHint.enable": false,
+  "pyright.inlayHints.variableType": false,
+  "pyright.inlayHints.functionReturnTypes": false,
+}
