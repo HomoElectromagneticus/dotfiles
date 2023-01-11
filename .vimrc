@@ -6,13 +6,12 @@ set nocompatible                "in compatible mode, lots of plugins don't work
 " this will be re-allowed once we have loaded vim plugins below
 filetype off
 
-" set the runtime path to include Vundle, fzf, and initialize
-"set rtp+=~/.vim/bundle/Vundle.vim
+" set the runtime path to include fzf and initialize
 set rtp+=/usr/local/opt/fzf
 call plug#begin()
 
 " let vim-plug handle and plugins. Add / enable plugins by adding
-" `Plugin 'blahblah/blahblah'` here
+" `Plug 'blahblah/blahblah'` here
 Plug 'fladson/vim-kitty'        "syntax highlighting for kitty.conf
 Plug 'mhinz/vim-signify', { 'tag': 'legacy' }
 Plug 'altercation/vim-colors-solarized'
@@ -20,16 +19,16 @@ Plug 'tpope/vim-vinegar'        "improves netrw (file browser) a bit
 Plug 'ziglang/zig.vim'          "official zig plugin
 Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration
 Plug 'tpope/vim-fugitive'       "git functions in vim
-Plug 'lifepillar/vim-mucomplete'
+"Plug 'lifepillar/vim-mucomplete'
 Plug 'ap/vim-buftabline'        "show buffers at top of window
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " All of your Plugins must be added before the following line
 call plug#end()                 "required
-filetype plugin indent on       "required (re-enables filetype detection etc.)
 
+filetype plugin indent on       "required (re-enables filetype detection etc.)
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-
 " Put your non-Plugin stuff after this line
 
 " set encoding to UTF-8
@@ -37,9 +36,6 @@ set encoding=utf-8
 
 " always show line numbers
 set number
-
-" disable the swap file
-" set noswap
 
 " move in 'editor lines' instead of file lines (useful for long lines with 
 " wrapping text)
@@ -92,6 +88,8 @@ hi SpellBad ctermfg=None ctermbg=None cterm=undercurl
 
 " force the window to always show four lines above and below the cursor
 set scrolloff=4
+" force at minimum one column to stay visible when horizontal scrolling
+set sidescrolloff=1
 
 " allow the mouse wheel to scroll vim and not the whole terminal window
 set mouse=a
@@ -105,13 +103,13 @@ set wrapscan               "set the search scan to wrap around the file
 
 " setting some sane defaults for tabs (note that this behavior is likely 
 " overwritten per filetype. see the '.vim/ftplugin/' folder
-set expandtab             "use spaces for tabs
+set expandtab              "use spaces for tabs
 
 " set nice characters in case we want to see certain whitespace things like
 " tabs and end-of-line characters
 set listchars=eol:⏎,tab:▷·,trail:·
 
-" Everyone tells me this setting is important, but I don't yet know why
+" Prevent vim from quitting without asking to save modified files
 set hidden
 
 " Tab completion for opening files etc
@@ -134,7 +132,7 @@ set showbreak=↳\           "use this funny arrow character and a space to show
 set breakindent            "try to follow indenting when soft wrapping
 set nowrap                 "do not soft wrap lines by default
 
-"" vim-gitgutter config stuff
+" signify config stuff
 set updatetime=400                      "vcs gutter will update every 400ms
 " make the SignColumn colors nicer
 highlight SignColumn guibg=lightgrey ctermbg=lightgrey
@@ -151,40 +149,51 @@ let g:netrw_liststyle = 3
 let g:netrw_winsize = 28
 
 " Buftabline settings
-let g:buftabline_numbers = 1            "show buffer number
+let g:buftabline_numbers = 1            "show buffer number for ez navigation
 
 " zig plugin settings
 " disable automatic formatting on save (for the time being!)
 let g:zig_fmt_autosave = 0
 
-" completion settings
-set completeopt+=menuone                 "mandatory for vim-mucomplete
-set completeopt+=popup  	         "show extra completion details
-set completeopt+=noselect                "auto-insert a completion only after
-                                         "i select one
-" force vim-mucomplete to obey vim's completeopt settings
-let g:mucomplete#always_use_completeopt = 1
-let g:mucomplete#no_mappings = 1	 "define no mappings
-" the next two automatically show completions after 350ms of not typing
-let g:mucomplete#enable_auto_at_startup = 1
-let g:mucomplete#completion_delay = 350
-set shortmess+=c                         "shut off completion messages
-let g:mucomplete#spel#max = 8	         "show max. 8 dictionary options 
-set complete-=i                          "prevent some hangs for completions
-" turn on minimal completion based on existing syntax highlighting if the
-" filetype does not have an omni function already defined
-if has("autocmd") && exists("+omnifunc")
-autocmd Filetype *
-    \	if &omnifunc == "" |
-    \		setlocal omnifunc=syntaxcomplete#Complete |
-    \	endif
-endif
-" setup mucompletion 'chains'
-" this is the default chain, very simple:
-"let g:mucomplete#chains = { 'default': ['path', 'keyn'] }
-let g:mucomplete#chains = {
-    \ 'default': { 'default': ['path', 'omni', 'keyn', 'uspl'],
-    \              '.*string.*': ['uspl', 'dict'],
-    \              '.*comment.*': ['uspl', 'dict'], },
-    \ 'vim':     { 'default': ['path', 'cmd', 'keyn', 'uspl'] }
-    \ }
+"" completion settings
+"set completeopt+=menuone                 "mandatory for vim-mucomplete
+"set completeopt+=popup  	         "show extra completion details
+"set completeopt+=noselect                "auto-insert a completion only after
+"                                         "i select one
+"" force vim-mucomplete to obey vim's completeopt settings
+"let g:mucomplete#always_use_completeopt = 1
+"let g:mucomplete#no_mappings = 1	 "define no mappings
+"" the next two automatically show completions after 350ms of not typing
+"let g:mucomplete#enable_auto_at_startup = 1
+"let g:mucomplete#completion_delay = 350
+"set shortmess+=c                         "shut off completion messages
+"let g:mucomplete#spel#max = 8	         "show max. 8 dictionary options 
+"set complete-=i                          "prevent some hangs for completions
+"" turn on minimal completion based on existing syntax highlighting if the
+"" filetype does not have an omni function already defined
+"if has("autocmd") && exists("+omnifunc")
+"autocmd Filetype *
+"    \	if &omnifunc == "" |
+"    \		setlocal omnifunc=syntaxcomplete#Complete |
+"    \	endif
+"endif
+"" setup mucompletion 'chains'
+"" this is the default chain, very simple:
+""let g:mucomplete#chains = { 'default': ['path', 'keyn'] }
+"let g:mucomplete#chains = {
+"    \ 'default': { 'default': ['path', 'omni', 'keyn', 'uspl'],
+"    \              '.*string.*': ['uspl', 'dict'],
+"    \              '.*comment.*': ['uspl', 'dict'], },
+"    \ 'vim':     { 'default': ['path', 'cmd', 'keyn', 'uspl'] }
+"    \ }
+
+" Conqueror of completion config (note that a lot of Coc's settings are 
+" in ~/.vim/coc-settings.json and json files can't really be commented)
+" GoTo code navigation (replaces default vim implementation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" make the selection in the completion popup actually visible for solarized
+" light
+highlight CocMenuSel ctermbg=15 ctermfg=8 guibg=Grey
