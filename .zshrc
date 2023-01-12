@@ -64,3 +64,8 @@ bindkey '\e[1;3C' forward-word          # option right
 # and the end / beginning of line thing with command
 bindkey '^[[1;9D' beginning-of-line     # cmd left 
 bindkey '^[[1;9C' end-of-line           # cmd right
+
+# set color theme for bat (see https://github.com/sharkdp/bat)
+# if we don't do this, then syntax-highlighted previews of things in vim or 
+# other programs might be unreadable
+export BAT_THEME="Solarized\ \(light\)"
