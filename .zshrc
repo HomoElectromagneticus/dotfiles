@@ -65,7 +65,5 @@ bindkey '\e[1;3C' forward-word          # option right
 bindkey '^[[1;9D' beginning-of-line     # cmd left 
 bindkey '^[[1;9C' end-of-line           # cmd right
 
-# set color theme for bat (see https://github.com/sharkdp/bat)
-# if we don't do this, then syntax-highlighted previews of things in vim or 
-# other programs might be unreadable
-export BAT_THEME="Solarized\ \(light\)"
+# add /usr/local/sbin to $PATH
+export PATH="/usr/local/sbin:$PATH"
