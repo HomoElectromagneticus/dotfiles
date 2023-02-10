@@ -2,7 +2,7 @@
 # enable ansi command-line colors
 export CLICOLOR=1
 
-# this varible is needed by zsh. in order to colorize the tab
+# this variable is needed by zsh. in order to colorize the tab
 # completion stuff correctly. zsh doesn't understand the MacOS /
 # BSD way of doing terminal colors, so we must export the colors
 # the way linux does
@@ -35,7 +35,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # do stuff with the prompt. show the user, then the current
 # directory (with an ellipsis if the path is too long), then
-# finally a # if the user is priviledged and a % otherwise.
+# finally a # if the user is privileged and a % otherwise.
 # note that % is the default zsh prompt character
 PROMPT="%n %(5~|%-1~/…/%3~|%4~)%(!.#.%%) "
 
