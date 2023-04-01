@@ -67,3 +67,20 @@ bindkey '^[[1;9C' end-of-line           # cmd right
 
 # add /usr/local/sbin to $PATH
 export PATH="/usr/local/sbin:$PATH"
+
+# prevent homebrew from sending any analytics data
+export HOMEBREW_NO_GOOGLE_ANALYTICS=1
+export HOMEBREW_NO_ANALYTICS=1
+
+# set the default editor to vim
+export EDITOR=/usr/local/bin/vim
+
+# allow bash-like <CTRL+x> and then <e> to open what's currently on the 
+# command line into the editor specified by $EDITOR
+autoload edit-command-line
+zle -N edit-command-line
+bindkey '^Xe' edit-command-line
+
+# allow fzf's keybindings
+source /usr/local/Cellar/fzf/0.38.0/shell/key-bindings.zsh
+
