@@ -82,5 +82,10 @@ zle -N edit-command-line
 bindkey '^Xe' edit-command-line
 
 # allow fzf's keybindings
-source /usr/local/Cellar/fzf/0.38.0/shell/key-bindings.zsh
+source /usr/local/Cellar/fzf/0.39.0/shell/key-bindings.zsh
+# this mac uses a "us international" keyboard layout with dead keys (for accent
+# marks etc), so pressing ALT+c produces the c with a tail: ç. I personally 
+# write this character by typing an apostrophe and then typing c  (as in, using
+# the dead keys), so we can just bind this character to the fzf ALT+c function:
+bindkey "ç" fzf-cd-widget
 
