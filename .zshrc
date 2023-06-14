@@ -44,7 +44,11 @@ PROMPT="%n %(5~|%-1~/…/%3~|%4~)%(!.#.%%) "
 # patterns
 autoload -Uz zmv
 setopt extended_glob
- 
+
+# alias "ls" to run "gls --color --group-directories-first"
+# (note that this assumes gls is available on mac via brew coreutils)
+alias ls="gls --color --group-directories-first"
+
 # alias "ll" to run "ls -alh"
 alias ll="ls -lah"
 
@@ -82,7 +86,7 @@ zle -N edit-command-line
 bindkey '^Xe' edit-command-line
 
 # allow fzf's keybindings
-source /usr/local/Cellar/fzf/0.39.0/shell/key-bindings.zsh
+source /usr/local/Cellar/fzf/0.41.1/shell/key-bindings.zsh
 # this mac uses a "us international" keyboard layout with dead keys (for accent
 # marks etc), so pressing ALT+c produces the c with a tail: ç. I personally 
 # write this character by typing an apostrophe and then typing c  (as in, using

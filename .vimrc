@@ -14,7 +14,7 @@ call plug#begin()
 " `Plug 'blahblah/blahblah'` here
 Plug 'fladson/vim-kitty'        "syntax highlighting for kitty.conf
 Plug 'mhinz/vim-signify', { 'tag': 'legacy' }
-Plug 'junegunn/goyo.vim'        "distraction-free writing
+"Plug 'preservim/vim-pencil'     "makes writing better
 Plug 'tpope/vim-vinegar'        "improves netrw (file browser) a bit
 Plug 'ziglang/zig.vim'          "official zig plugin
 Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration
@@ -122,6 +122,10 @@ set listchars=eol:⏎,tab:▷·,trail:·
 " Prevent vim from quitting without asking to save modified files
 set hidden
 
+" keep temporary files used during saving etc in ~/tmp
+set backupdir=~/tmp
+set dir=~/tmp
+
 " Nice tab completion for opening files etc
 set wildmenu
 set wildignorecase
@@ -170,17 +174,3 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Goyo tweaks (force underline for spelling errors, and italics for comments.
-" this fixes some minor annoyances when entering / exiting goyo mode)
-function! s:goyo_enter()
-  highlight Comment cterm=italic gui=italic
-  hi SpellBad ctermfg=None ctermbg=None cterm=undercurl gui=undercurl
-endfunction
-
-function! s:goyo_leave()
-  highlight Comment cterm=italic gui=italic
-  hi SpellBad ctermfg=None ctermbg=None cterm=undercurl gui=undercurl
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
