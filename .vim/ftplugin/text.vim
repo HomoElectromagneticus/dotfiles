@@ -4,7 +4,8 @@
 setlocal wrap
 
 " set the softwrapping 'edge' at 80 characters
-setlocal columns=80
+" this is actually dumb as it breaks the vim theme
+"setlocal columns=80
 
 " ensure the softwrapping don't break a word apart
 setlocal linebreak
