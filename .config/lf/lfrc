@@ -56,6 +56,10 @@ map I :rename; cmd-home                 #cursor at the beginning of the filename
 map a :rename                           #cursor at the end (excluding filename)
 map A :rename; cmd-end                  #cursor at the end (including filename)
 
+# move to next or previous directory
+map J :updir; set dironly true; down; set dironly false; open
+map K :updir; set dironly true; up; set dironly false; open
+
 # use enter for shell commands
 map <enter> shell
 

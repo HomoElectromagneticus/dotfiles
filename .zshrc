@@ -116,5 +116,5 @@ lfcd () {
         fi
     fi
 }
-# alias lfcd to just lf so we can type a bit less
-alias lf=lfcd
+# alias lfcd to just lfc so we can type a bit less
+alias lfc=lfcd
