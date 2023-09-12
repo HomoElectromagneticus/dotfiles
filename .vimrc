@@ -1,5 +1,4 @@
 " here be my vim settings
-" be iMproved
 set nocompatible                "in compatible mode, many plugins don't work
 
 " disallow vim to detect file types (required for plugins to work). note that
@@ -18,7 +17,6 @@ Plug 'tpope/vim-vinegar'        "improves netrw (file browser) a bit
 Plug 'ziglang/zig.vim'          "official zig plugin
 Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration
 Plug 'tpope/vim-fugitive'       "git functions in vim
-"Plug 'ap/vim-buftabline'        "show buffers at top of window
 Plug 'neoclide/coc.nvim', {'branch': 'release'}     "fancy completion
 Plug 'lervag/wiki.vim'          "knowledge database / notes thing
 Plug 'lervag/lists.vim'         "makes to do lists a bit simpler
@@ -27,7 +25,7 @@ Plug 'junegunn/goyo.vim'        "distraction-free writing in vim
 Plug 'altercation/vim-colors-solarized'
 Plug 'NLKNguyen/papercolor-theme'
 
-" All of your Plugins must be added before the following line
+" All plugins must be added before the following line
 call plug#end()
 
 filetype plugin indent on       "required (re-enables filetype detection etc.)
@@ -63,10 +61,30 @@ endfunction
 let &statusline = s:statusline_expr()
 set laststatus=2          "always show the status line
 
+" enables undercurls
+let &t_Cs = "\e[4:3m"
+let &t_Ce = "\e[4:0m"
+
+" enables strikthroughs (must come before colorscheme setting!)
+let &t_Ts = "\e[9m"
+let &t_Te = "\e[29m"
+
+" truecolor support
+let &t_8f = "\e[38:2:%lu:%lu:%lum"
+let &t_8b = "\e[48:2:%lu:%lu:%lum"
+let &t_RF = "\e]10;?\e\\"
+let &t_RB = "\e]11;?\e\\"
+
+" enable bracketed paste
+let &t_BE = "\e[?2004h"
+let &t_BD = "\e[?2004l"
+let &t_PS = "\e[200~"
+let &t_PE = "\e[201~"
+
 " enable syntax highlighting and set the theme
 syntax enable
-set background=light
-" Custom settings for solarized
+"set background=light
+" Custom settings for solarized within CoC
 function! s:tweak_solarized_colors()
         "makes the signify column match the number column
         highlight SignColumn guibg=lightgrey ctermbg=lightgrey
@@ -76,7 +94,7 @@ endfunction
 autocmd! ColorScheme solarized call s:tweak_solarized_colors()
 " set the color theme
 colorscheme PaperColor
-" enable italics (this must come immediately after colorscheme)
+" enable italics for code comments (must come immediately after colorscheme)
 highlight Comment cterm=italic gui=italic
 
 " enable copy and paste into and out of the system clipboard
@@ -86,14 +104,12 @@ set clipboard=unnamed
 " that existed before entering insert mode
 set backspace=indent,eol,start
 
-" turn on spell checking for english and french
+" turn on spell checking for english and french (both at once)
 set spell spelllang=en,fr
 " but don't check for capitalization
 set spellcapcheck=
-" make the spell check uses 'undercurl' the words (falls back to underline
-" when undercurl is not available)
-let &t_Cs = "\e[4:3m"                   "enable undercurl
-let &t_Ce = "\e[4:0m"                   "enable undercurl
+" make the spell check use 'undercurl' for errors (falls back to underline
+" when undercurl is not available in the terminal)
 hi SpellBad ctermfg=None ctermbg=None cterm=undercurl gui=undercurl
 
 " force the window to always show four lines above and below the cursor
@@ -101,8 +117,9 @@ set scrolloff=4
 " force at minimum one column to stay visible when horizontal scrolling
 set sidescrolloff=1
 
-" allow the mouse wheel to scroll vim and not the whole terminal window
-set mouse=a
+set mouse=a                "mouse wheel scrolls vim and not the term window
+set ttymouse=sgr           "the mouse will work for a large number of columns
+set balloonevalterm        "allows balloons to show up for some (mouse?) events
 
 " settings for searching
 set hlsearch               "highlight my search
@@ -113,6 +130,7 @@ set wrapscan               "set the search scan to wrap around the file
 
 " setting some sane defaults for tabs (note that this behavior is likely 
 " overwritten per filetype. see the '.vim/ftplugin/' folder)
+set tabstop=4 shiftwidth=4 "a tab is four spaces
 set expandtab              "use spaces for tabs
 
 " set nice characters in case we want to see certain whitespace things like
@@ -129,6 +147,10 @@ set dir=~/tmp
 " Nice tab completion for opening files etc
 set wildmenu
 set wildignorecase
+
+" Don't make noise
+set vb
+set t_vb=
 
 " Cursor config
 let &t_EI="\<Esc>[1 q"     "normal mode: blinking block
@@ -152,81 +174,7 @@ if executable('rg') | set grepformat+=%f:%l:%c:%m grepprg=rg | endif
 " titlebar stuff - show the filename of the current buffer (nice for goyo)
 set title
 set titlestring=%-25.55F\ %a%r%m titlelen=74
-
-" PLUGIN CONFIGURATIONS
-" signify config stuff
-set updatetime=400                      "vcs gutter will update every 400ms
-set signcolumn=yes                      "always show the SignColumn
-let g:signify_sign_show_count = 0       "don't know the number of del'd lines
-let g:signify_sign_change = '~'         "use ~ to show a changed line
-
-" Netrw (vim's file explorer) settings
-let g:netrw_keepdir = 1                 "force working dir to equal browsing dir
-let g:netrw_liststyle = 3               "use the 'tree' listing as the default
-" Sets the default size of netrw when opened as a new split
-let g:netrw_winsize = 28
-
-"" Buftabline settings
-"let g:buftabline_numbers = 1            "show buffer number for ez navigation
-"let g:buftabline_indicators = 1         "show if a buffer has been modified
-
-"" zig plugin settings
-let g:zig_fmt_autosave = 0              "disable automatic formatting on save
-
-"" Conqueror of completion config (note that a lot of Coc's settings are 
-" in ~/.vim/coc-settings.json and json files can't really be commented)
-" GoTo code navigation (replaces default vim implementation
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-"" wiki.vim configuration
-" specify the root directory of your personal wiki (open with <leader>ww)
-let g:wiki_root = '~/Documents/text-vault'
-" set leader + t to run a command that will search for to-do items 'under' the
-" text-vault folder and add them to vim's quickfix list. note that this assumes 
-" that the to-do items all start with ` [ ]`. the quickfix list can be
-" shown with `:cw`
-nmap <leader>t :vimgrep /\s\[\s\]/j ~/Documents/text-vault/**.md<cr>
-
-"" Goyo tweaks (mostly attached to entering and exiting goyo)
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-function! s:goyo_enter()
-  "fixes italics problems in goyo
-  highlight Comment cterm=italic gui=italic
-  "fixes spellcheck highlighting
-  hi SpellBad ctermfg=None ctermbg=None cterm=undercurl gui=undercurl
-  "removes the tabline to be even more distraction-free
-  "set showtabline=0
-  "the below stuff enables quitting directly from goyo in certain cases 
-  let b:quitting = 0
-  let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
-  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-endfunction
-
-function! s:goyo_leave()
-  "fixes italics
-  highlight Comment cterm=italic gui=italic
-  "fixes spellcheck highlighting
-  hi SpellBad ctermfg=None ctermbg=None cterm=undercurl gui=undercurl
-  "turns back on the tabline and tells buftabline to update
-  "set showtabline=2
-  ":call buftabline#update(0)
-  "quit Vim if this is the only remaining buffer
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-      if b:quitting_bang
-          qa!
-      else
-          qa
-      endif
-  endif
-endfunction
-" this makes goyo a little taller to better use all the screen real-estate
-let g:goyo_height = 100
+set titleold=              "restores normal window title after quitting vim
 
 "" This function allows sending the output of a vim command to a fresh buffer
 " see documentation at: https://gist.github.com/romainl/eae0a260ab9c135390c30cd370c20cd7
@@ -260,7 +208,83 @@ function! Redir(cmd, rng, start, end)
     call setline(1, output)
 endfunction
 
-" This command definition includes -bar, so that it is possible to "chain" Vim commands.
-" Side effect: double quotes can't be used in external commands
+" This command definition includes -bar, so that it is possible to "chain" 
+" Vim commands. Side effect: double quotes can't be used in external commands
 command! -nargs=1 -complete=command -bar -range Redir silent call Redir(<q-args>, <range>, <line1>, <line2>)
 
+" PLUGIN CONFIGURATIONS
+" signify config stuff
+set updatetime=400                      "vcs gutter will update every 400ms
+set signcolumn=yes                      "always show the SignColumn
+let g:signify_sign_show_count = 0       "don't know the number of del'd lines
+let g:signify_sign_change = '~'         "use ~ to show a changed line
+
+" Netrw (vim's file explorer) settings
+let g:netrw_keepdir = 1                 "force working dir to equal browsing dir
+let g:netrw_liststyle = 3               "use the 'tree' listing as the default
+" Sets the default size of netrw when opened as a new split
+let g:netrw_winsize = 28
+
+" zig plugin settings
+let g:zig_fmt_autosave = 0              "disable automatic formatting on save
+
+" Conqueror of completion config (note that a lot of Coc's settings are 
+" in ~/.vim/coc-settings.json and json files can't really be commented)
+" specify the path to node in case vim is launched by something else than
+" the terminal
+let g:coc_node_path = '/usr/local/bin/node'
+" GoTo code navigation (replaces default vim implementation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+"" wiki.vim configuration
+" specify the root directory of your personal wiki (open with <leader>ww)
+let g:wiki_root = '~/Documents/text-vault'
+" set leader + t to run a command that will search for to-do items 'under' the
+" text-vault folder and add them to vim's quickfix list. note that this assumes 
+" that the to-do items all start with ` [ ]`. the quickfix list can be
+" shown with `:cw`
+nmap <leader>t :vimgrep /\s\[\s\]\s/j ~/Documents/text-vault/**/*.md<cr>
+" do not convert things that are links into links with the 'Enter' key in
+" normal mode
+let g:wiki_link_transform_on_follow = 0
+
+"" lists.vim configuration
+" enable the plugin automatically for markdown files
+let g:lists_filetypes = ['markdown', 'wiki', 'md']
+
+" goyo config - functions to help its behavior when exiting and entering
+function! s:goyo_enter()
+  "supposedly fixes italics problems in goyo
+  highlight Comment cterm=italic gui=italic
+  "fixes spellcheck highlighting
+  hi SpellBad ctermfg=None ctermbg=None cterm=undercurl gui=undercurl
+  "the below stuff enables quitting directly from goyo in certain cases 
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+
+function! s:goyo_leave()
+  "supposedly fixes italics
+  highlight Comment cterm=italic gui=italic
+  "fixes spellcheck highlighting
+  hi SpellBad ctermfg=None ctermbg=None cterm=undercurl gui=undercurl
+  "quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+      if b:quitting_bang
+          qa!
+      else
+          qa
+      endif
+  endif
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" this makes goyo a little taller to better use all the screen real-estate
+let g:goyo_height = 100
