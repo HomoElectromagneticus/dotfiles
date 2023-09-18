@@ -44,6 +44,15 @@ noremap k gk
 vmap j gj
 vmap k gk
 
+" implement some readline shortcuts for the vim command line
+" move to start of line
+cnoremap <c-a> <home>
+" move to end of line
+cnoremap <c-e> <end>
+
+" let typing Q instead of q quit vim as well
+:command Q q
+
 " Status line stuff. Nothing fancy!
 function! s:statusline_expr()
   let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"

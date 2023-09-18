@@ -63,15 +63,8 @@ alias grep="grep --color"
 bindkey "^[[3~" delete-char
 
 # bind the home and end keys
-bindkey '\e[H'  beginning-of-line
-bindkey '\e[F'  end-of-line
-
-# for the mac "move by words" thing with the option key
-bindkey '\e[1;3D' backward-word         # option left 
-bindkey '\e[1;3C' forward-word          # option right
-# and the end / beginning of line thing with command
-bindkey '^[[1;9D' beginning-of-line     # cmd left 
-bindkey '^[[1;9C' end-of-line           # cmd right
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
 
 # add /usr/local/sbin to $PATH
 export PATH="/usr/local/sbin:$PATH"

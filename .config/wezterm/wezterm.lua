@@ -1,5 +1,6 @@
 -- Pull in the wezterm API
 local wezterm = require 'wezterm'
+local act = wezterm.action
 
 -- This table will hold the configuration.
 local config = {}
@@ -33,13 +34,11 @@ config.cursor_blink_rate = 700
 config.cursor_blink_ease_in = "Constant"
 config.cursor_blink_ease_out = "Constant"
 
--- Enabling editing the config file quickly from CMD+, like many Mac programs
-local act = wezterm.action
-
+-- Keyboard shortcuts
 config.keys = {
+-- Enabling editing the config file quickly from CMD+, like many Mac programs
   {
-    key = ',',
-    mods = 'CMD',
+    key = ',', mods = 'CMD',
     action = act.SpawnCommandInNewTab {
       cwd = os.getenv('WEZTERM_CONFIG_DIR'),
       set_environment_variables = {
@@ -51,6 +50,36 @@ config.keys = {
       },
     },
   },
+  -- assigning some readline movement commands to the "standard" MacOS shotcuts
+  -- for details, see http://www.math.utah.edu/docs/info/features_7.html#SEC45
+  -- and https://wezfurlong.org/wezterm/config/lua/keyassignment/SendKey.html
+  -- and https://apple.stackexchange.com/questions/12997/can-home-and-end-keys-be-mapped-when-using-terminal
+  -- go to beginning of line
+  { 
+    key = 'LeftArrow', mods = 'CMD', 
+    action = act.SendKey { key = 'a', mods = 'CTRL'}
+  },
+  -- go to end of line
+  { 
+    key = 'RightArrow', mods = 'CMD', 
+    action = act.SendKey { key = 'e', mods = 'CTRL'}
+  }, 
+  -- go to beginning of previous word
+  { 
+    key = 'LeftArrow', mods = 'ALT', 
+    action = act.SendKey { key = 'b', mods = 'ALT'}
+  },
+  -- go to beginning of next word
+  { 
+    key = 'RightArrow', mods = 'ALT', 
+    action = act.SendKey { key = 'f', mods = 'ALT'}
+  }, 
+  -- undo the last thing you did (besides filling the line with a previous 
+  -- command...)
+  { 
+    key = 'z', mods = 'CMD', 
+    action = act.SendKey { key = '_', mods = 'CTRL'}
+  }, 
   -- other keys
 }
 
