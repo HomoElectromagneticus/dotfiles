@@ -28,6 +28,9 @@ config.window_padding = {
   bottom = '0cell',
 }
 
+-- Honor kitty keyboard protocol: https://sw.kovidgoyal.net/kitty/keyboard-protocol/
+config.enable_kitty_keyboard = true
+
 -- Cursor settings
 config.default_cursor_style = "BlinkingBlock"
 config.cursor_blink_rate = 700

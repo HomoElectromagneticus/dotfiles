@@ -11,7 +11,6 @@ call plug#begin()
 
 " let vim-plug handle and plugins. Add / enable plugins by adding
 " `Plug 'blahblah/blahblah'` here
-Plug 'fladson/vim-kitty'        "syntax highlighting for kitty.conf
 Plug 'mhinz/vim-signify', { 'tag': 'legacy' }
 Plug 'tpope/vim-vinegar'        "improves netrw (file browser) a bit
 Plug 'ziglang/zig.vim'          "official zig plugin
