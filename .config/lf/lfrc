@@ -56,6 +56,32 @@ map I :rename; cmd-home                 #cursor at the beginning of the filename
 map a :rename                           #cursor at the end (excluding filename)
 map A :rename; cmd-end                  #cursor at the end (including filename)
 
+# bulk rename (from the lf wiki). sends a list of files selected to $EDITOR for
+# renaming
+cmd bulk-rename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename -a $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" >"$old"
+    printf '%s\n' "$fs" >"$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+            continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+
 # move to next or previous directory
 map J :updir; set dironly true; down; set dironly false; open
 map K :updir; set dironly true; up; set dironly false; open
@@ -78,6 +104,7 @@ map O $mimeopen --ask $f
 map gC cd ~/.config
 map gD cd ~/Downloads
 map gW cd ~/Documents/text-vault
+map gM cd '~/music work'
 
 # define a custom 'open' command
 # This command is called when current file is not a directory. You may want to
@@ -109,9 +136,7 @@ cmd delete ${{
 }}
 
 # use '<delete>' key for either 'trash' or 'delete' command
-# map <delete> trash
 map <delete> delete
-map <backspace2> delete
 
 # extract the current file with the right command
 cmd extract ${{
@@ -120,11 +145,12 @@ cmd extract ${{
         *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
         *.tar.gz|*.tgz) tar xzvf $f;;
         *.tar.xz|*.txz) tar xJvf $f;;
-        # on MacOS, ditto is much more robust than zip / unzip
+        # on MacOS, ditto is much more robust than zip / unzip this is easier
+        # easier than using Keka: we don't have to specify the archive type
         *.zip) ditto -x -k $f $PWD;;
         # use Keka's command-line tool for rar files
         *.rar) /Applications/Keka.app/Contents/MacOS/Keka --cli unrar x $f;; 
-        *.7z) 7z x $f;;
+        *.7z) /Applications/Keka.app/Contents/MacOS/Keka --cli 7z x $f;; 
     esac
 }}
 
