@@ -38,6 +38,10 @@ config.cursor_blink_ease_in = "Constant"
 config.cursor_blink_ease_out = "Constant"
 
 -- Keyboard shortcuts
+-- this is needed to make wezterm happy with my US-International layout
+config.send_composed_key_when_left_alt_is_pressed = true
+config.send_composed_key_when_right_alt_is_pressed = true
+-- other key settings 
 config.keys = {
 -- Enabling editing the config file quickly from CMD+, like many Mac programs
   {
@@ -83,7 +87,6 @@ config.keys = {
     key = 'z', mods = 'CMD', 
     action = act.SendKey { key = '_', mods = 'CTRL'}
   }, 
-  -- other keys
 }
 
 -- and finally, return the configuration to wezterm
