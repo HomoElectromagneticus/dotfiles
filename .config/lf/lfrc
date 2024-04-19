@@ -20,11 +20,17 @@ set number true
 # two columns only, no preview pane on the right
 set ratios 1:2
 
+# do not draw a border between the columns
+set drawbox false
+
 # clear the files marked for cut or copy upon quitting
 cmd on-quit clear
 
 # allow wrapped scrolling
 set wrapscroll true
+
+# refresh the list every one second
+set period 1
 
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
@@ -118,7 +124,7 @@ cmd open &{{
 }}
 
 # copy path to clipboard (on MacOS)
-#cmd yank-path $printf '%s' "$f" | pbcopy
+map Y $printf "%s" "$fx" | pbcopy
 
 # define a custom 'delete' command (actually moves files and folders to the 
 # system trash)
@@ -135,7 +141,7 @@ cmd delete ${{
     esac
 }}
 
-# use '<delete>' key for either 'trash' or 'delete' command
+# use '<delete>' key for the 'delete' command
 map <delete> delete
 
 # extract the current file with the right command
@@ -182,6 +188,7 @@ cmd fzf_jump ${{
   fi
   lf -remote "send $id $cmd \"$res\""
 }}
+map F fzf_jump
 
 # open gui file manager at current location
 cmd open-file-manager-here ${{

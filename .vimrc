@@ -17,6 +17,9 @@ Plug 'ziglang/zig.vim'          "official zig plugin
 Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration
 Plug 'tpope/vim-fugitive'       "git functions in vim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}     "fancy completion
+Plug 'SirVer/ultisnips'         "snippets (confirm with CTRL + y)
+                                "you must run :CocInstall coc-ultisnips
+                                "for CoC to see the snippets
 Plug 'lervag/wiki.vim'          "knowledge database / notes thing
 Plug 'lervag/lists.vim'         "makes to do lists a bit simpler
 Plug 'junegunn/goyo.vim'        "distraction-free writing in vim
@@ -148,6 +151,10 @@ set listchars=eol:⏎,tab:▷·,trail:·
 " Prevent vim from quitting without asking to save modified files
 set hidden
 
+" put the viminfo file in the ~/.cache/vim directory since it operates like
+" a cache file
+set viminfofile=~/.cache/vim/viminfo
+
 " keep temporary files used during saving etc in ~/tmp
 set backupdir=~/tmp
 set dir=~/tmp
@@ -183,6 +190,20 @@ if executable('rg') | set grepformat+=%f:%l:%c:%m grepprg=rg | endif
 set title
 set titlestring=%-25.55F\ %a%r%m titlelen=74
 set titleold=              "restores normal window title after quitting vim
+
+"try to jump to the last known cursor position when opening a file
+function! Go_to_last_known_position() abort " {{{1
+  if line("'\"") <= 0 || line("'\"") > line('$')
+    return
+  endif
+
+  normal! g`"
+  if &foldlevel == 0
+    normal! zMzvzz
+  endif
+endfunction
+
+autocmd! BufReadPost * call Go_to_last_known_position()
 
 "" This function allows sending the output of a vim command to a fresh buffer
 " see documentation at: https://gist.github.com/romainl/eae0a260ab9c135390c30cd370c20cd7
@@ -221,6 +242,10 @@ endfunction
 command! -nargs=1 -complete=command -bar -range Redir silent call Redir(<q-args>, <range>, <line1>, <line2>)
 
 " PLUGIN CONFIGURATIONS
+" disable some unnecessary internal plugins
+let g:loaded_gzip = 1
+let g:loaded_zipPlugin = 1
+let g:loadedvimballPlugin = 1
 " signify config stuff
 set updatetime=400                      "vcs gutter will update every 400ms
 set signcolumn=yes                      "always show the SignColumn
@@ -241,7 +266,7 @@ let g:zig_fmt_autosave = 0              "disable automatic formatting on save
 " specify the path to node in case vim is launched by something else than
 " the terminal
 let g:coc_node_path = '/usr/local/bin/node'
-" GoTo code navigation (replaces default vim implementation
+" GoTo code navigation (replaces default vim implementation)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)

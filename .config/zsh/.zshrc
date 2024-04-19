@@ -1,7 +1,3 @@
-## these are my zsh configurations
-# enable ansi command-line colors
-export CLICOLOR=1
-
 # the variable LS_COLORS is needed by zsh in order to colorize the tab
 # completion stuff correctly. zsh doesn't understand the MacOS / BSD way
 # of doing terminal colors, so we must export the colors the way linux
@@ -13,25 +9,24 @@ else
     eval "$(gdircolors -b)"
 fi
 
+## completion stuff
 # during completion, display a list with selectable options, and also
 # let the completion be case-insensitive
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 
 zstyle ':completion:*' menu select 
-   
 # during completion, hitting tab once will show the menu in most cases
 # (notably if the case doesn't match)
 setopt MENU_COMPLETE
-
 # enable the completion system (should be done after completion settings
 # are configured)
 autoload -Uz compinit
 compinit
+_comp_options+=(globdots)		# include hidden files (that start with a .)
 
 # save 1000 lines of command history
-HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
-setopt appendhistory
+HISTFILE=~/.cache/zsh/history
+HISTSIZE=5000
+SAVEHIST=5000
 
 # allow the zsh completions to use the same colors as ls. note that we
 # have to use the LS_COLORS variable defined above instead of the
@@ -49,16 +44,6 @@ PROMPT="%n %(5~|%-1~/…/%3~|%4~)%(!.#.%%) "
 autoload -Uz zmv
 setopt extended_glob
 
-# alias "ls" to run "gls --color --group-directories-first" (note that 
-# this assumes gls is available on mac via brew coreutils)
-alias ls="gls --color --group-directories-first"
-
-# alias "ll" to run "ls -alh"
-alias ll="ls -lah"
-
-# alias "grep" to run "grep --color"
-alias grep="grep --color"
-
 # bind "fn + delete" to forward-delete like it normally is on a mac
 bindkey "^[[3~" delete-char
 
@@ -66,26 +51,14 @@ bindkey "^[[3~" delete-char
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 
-# add /usr/local/sbin to $PATH
-export PATH="/usr/local/sbin:$PATH"
-
-# prevent homebrew from sending any analytics data
-export HOMEBREW_NO_ANALYTICS=1
-
-# set the default editor to vim
-export EDITOR=/usr/local/bin/vim
-
-# tell wezterm to find its config within the .config folder
-export WEZTERM_CONFIG_FILE=$HOME/.config/wezterm/wezterm.lua
-
-# allow bash-like <CTRL+x> and then <e> to open what's currently on the 
-# command line into the editor specified by $EDITOR
+# allow <CTRL+e> to open what's currently on the command line into the editor 
+# specified by $EDITOR
 autoload edit-command-line
 zle -N edit-command-line
-bindkey '^Xe' edit-command-line
+bindkey '^e' edit-command-line
 
 # allow fzf's keybindings
-source /usr/local/Cellar/fzf/0.42.0/shell/key-bindings.zsh
+source /usr/local/Cellar/fzf/0.49.0/shell/key-bindings.zsh
 # this mac uses a "us international" keyboard layout with dead keys (for accent
 # marks etc), so pressing ALT+c produces the c with a tail: ç. I personally 
 # write this character by typing an apostrophe and then typing c  (as in, using
@@ -110,4 +83,10 @@ lfcd () {
     fi
 }
 # alias lfcd to just lfc so we can type a bit less
-alias lfc=lfcd
+#alias lfc=lfcd
+
+# load aliases file if it exists
+[ -f "$HOME/.config/aliasesrc" ] && source "$HOME/.config/aliasesrc"
+
+# load syntax highlighting in the zsh shell
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

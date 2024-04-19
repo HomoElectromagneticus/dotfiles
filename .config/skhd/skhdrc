@@ -22,7 +22,7 @@ shift + alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
 # toggle maximize focused window
 ctrl + alt - m : yabai -m window --toggle zoom-fullscreen
 # balance windows (resize all to occupy the same area)
-ctrl + alt - e : yabai -m space --balance
+ctrl + alt - b : yabai -m space --balance
 
 ## Resize mode
 # create resize mode (sadly with system integrity protection enabled, we cannot
@@ -83,3 +83,6 @@ shift + alt - 6 : yabai -m window --space 6;
 shift + alt - 7 : yabai -m window --space 7;
 shift + alt - 8 : yabai -m window --space 8;
 shift + alt - 9 : yabai -m window --space 9;
+
+# open a new instance of WezTerm
+alt - return : open -na "/Applications/WezTerm.app"
