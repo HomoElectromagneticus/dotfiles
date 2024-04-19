@@ -1,0 +1,18 @@
+# alias "ls" to run "gls --color --group-directories-first" (note that 
+# this assumes gls is available on mac via brew coreutils)
+alias ls="gls --color --group-directories-first"
+
+# alias "ll" to run "ls -alh"
+alias ll="ls -lah"
+
+# alias "grep" to run "grep --color"
+alias grep="grep --color"
+
+# alias "mv" to run "mv -iv" to get a little confirmation
+alias mv="mv -iv"
+
+# alias "cp" to run "cp -iv" to get a little confirmation
+alias mv="cp -iv"
+
+# alias lfcd to just lfc so we can type a bit less
+alias lfc=lfcd
