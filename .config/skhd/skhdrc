@@ -85,4 +85,4 @@ shift + alt - 8 : yabai -m window --space 8;
 shift + alt - 9 : yabai -m window --space 9;
 
 # open a new instance of WezTerm
-alt - return : open -na "/Applications/WezTerm.app"
+alt - t : open -na "/Applications/WezTerm.app"

@@ -10,8 +10,15 @@ export PATH="$PATH:"/Applications/microchip/xc8/v2.32/bin""
 # add /usr/local/sbin to $PATH
 export PATH="/usr/local/sbin:$PATH"
 
+# for software that respects XDG, we can ask that config files be put in the
+# .config directory instead of home
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # zsh config should be found in .config
 export ZDOTDIR="$HOME/.config/zsh"
+
+# zsh compilation caches can go in .cache
+ZSH_COMPDUMP="$HOME/.cache/zsh/zcompcache"
 
 # prevent homebrew from sending any analytics data
 export HOMEBREW_NO_ANALYTICS=1

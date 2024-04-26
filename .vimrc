@@ -17,9 +17,9 @@ Plug 'ziglang/zig.vim'          "official zig plugin
 Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration
 Plug 'tpope/vim-fugitive'       "git functions in vim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}     "fancy completion
-Plug 'SirVer/ultisnips'         "snippets (confirm with CTRL + y)
-                                "you must run :CocInstall coc-ultisnips
-                                "for CoC to see the snippets
+Plug 'SirVer/ultisnips'         "snippets (confirm with CTRL + y) note that you
+                                "must run :CocInstall coc-ultisnips for Coc to
+                                "see the snippets
 Plug 'lervag/wiki.vim'          "knowledge database / notes thing
 Plug 'lervag/lists.vim'         "makes to do lists a bit simpler
 Plug 'junegunn/goyo.vim'        "distraction-free writing in vim
@@ -94,7 +94,6 @@ let &t_PE = "\e[201~"
 
 " enable syntax highlighting and set the theme
 syntax enable
-"set background=light
 " Custom settings for solarized within CoC
 function! s:tweak_solarized_colors()
         "makes the signify column match the number column
@@ -125,8 +124,8 @@ hi SpellBad ctermfg=None ctermbg=None cterm=undercurl gui=undercurl
 
 " force the window to always show four lines above and below the cursor
 set scrolloff=4
-" force at minimum one column to stay visible when horizontal scrolling
-set sidescrolloff=1
+" force at minimum two columns to stay visible when horizontal scrolling
+set sidescrolloff=2
 
 set mouse=a                "mouse wheel scrolls vim and not the term window
 set ttymouse=sgr           "the mouse will work for a large number of columns

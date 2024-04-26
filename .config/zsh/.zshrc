@@ -23,10 +23,12 @@ autoload -Uz compinit
 compinit
 _comp_options+=(globdots)		# include hidden files (that start with a .)
 
-# save 1000 lines of command history
+# save 1000s of lines of command history
 HISTFILE=~/.cache/zsh/history
 HISTSIZE=5000
-SAVEHIST=5000
+SAVEHIST=4000
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
 
 # allow the zsh completions to use the same colors as ls. note that we
 # have to use the LS_COLORS variable defined above instead of the
@@ -58,7 +60,7 @@ zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 # allow fzf's keybindings
-source /usr/local/Cellar/fzf/0.49.0/shell/key-bindings.zsh
+source /usr/local/Cellar/fzf/0.50.0/shell/key-bindings.zsh
 # this mac uses a "us international" keyboard layout with dead keys (for accent
 # marks etc), so pressing ALT+c produces the c with a tail: ç. I personally 
 # write this character by typing an apostrophe and then typing c  (as in, using
@@ -82,8 +84,6 @@ lfcd () {
         fi
     fi
 }
-# alias lfcd to just lfc so we can type a bit less
-#alias lfc=lfcd
 
 # load aliases file if it exists
 [ -f "$HOME/.config/aliasesrc" ] && source "$HOME/.config/aliasesrc"
