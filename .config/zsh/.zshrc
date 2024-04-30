@@ -9,24 +9,17 @@ else
     eval "$(gdircolors -b)"
 fi
 
-## completion stuff
-# during completion, display a list with selectable options, and also
-# let the completion be case-insensitive
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 
-zstyle ':completion:*' menu select 
-# during completion, hitting tab once will show the menu in most cases
-# (notably if the case doesn't match)
-setopt MENU_COMPLETE
-# enable the completion system (should be done after completion settings
-# are configured)
-autoload -Uz compinit
+# Basic auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
 compinit
-_comp_options+=(globdots)		# include hidden files (that start with a .)
+_comp_options+=(globdots)		# Include hidden files.
 
 # save 1000s of lines of command history
 HISTFILE=~/.cache/zsh/history
-HISTSIZE=5000
-SAVEHIST=4000
+HISTSIZE=8000
+SAVEHIST=6000
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
 
@@ -53,11 +46,12 @@ bindkey "^[[3~" delete-char
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 
-# allow <CTRL+e> to open what's currently on the command line into the editor 
-# specified by $EDITOR
+# allow <CTRL+x> then <e> to open what's currently on the command line into the
+# editor specified by $VISUAL. this is very similar to the "standard" bash
+# keybinding
 autoload edit-command-line
 zle -N edit-command-line
-bindkey '^e' edit-command-line
+bindkey '^xe' edit-command-line
 
 # allow fzf's keybindings
 source /usr/local/Cellar/fzf/0.50.0/shell/key-bindings.zsh
@@ -88,5 +82,6 @@ lfcd () {
 # load aliases file if it exists
 [ -f "$HOME/.config/aliasesrc" ] && source "$HOME/.config/aliasesrc"
 
-# load syntax highlighting in the zsh shell
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# load syntax highlighting in the zsh shell (should be the last thing in the 
+# file)
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null

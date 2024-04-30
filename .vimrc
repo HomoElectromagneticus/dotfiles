@@ -55,6 +55,10 @@ cnoremap <c-e> <end>
 " let typing Q instead of q quit vim as well
 :command Q q
 
+" turn off the default keybind for opening the list of previous commands in a 
+" small horizontal split. i never do this and it screws me up often enough...
+map q: <Nop>
+
 " Status line stuff. Nothing fancy!
 function! s:statusline_expr()
   let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
@@ -245,6 +249,10 @@ command! -nargs=1 -complete=command -bar -range Redir silent call Redir(<q-args>
 let g:loaded_gzip = 1
 let g:loaded_zipPlugin = 1
 let g:loadedvimballPlugin = 1
+
+" force vim-plug to open in a vertical split instead of a new tab page
+let g:plug_window='split new'
+
 " signify config stuff
 set updatetime=400                      "vcs gutter will update every 400ms
 set signcolumn=yes                      "always show the SignColumn

@@ -87,6 +87,20 @@ config.keys = {
     key = 'z', mods = 'CMD', 
     action = act.SendKey { key = '_', mods = 'CTRL'}
   }, 
+  -- Turn off the default CMD-t "make new tab" actions, because i do not like
+  -- tabs
+  {
+    key = 't',mods = 'CMD',
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+  {
+    key = 't',mods = 'CTRL|SHIFT',
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+  {
+    key = 'T',mods = 'CMD|SHIFT',
+    action = wezterm.action.DisableDefaultAssignment,
+  },
 }
 
 -- and finally, return the configuration to wezterm
