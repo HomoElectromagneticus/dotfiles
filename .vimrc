@@ -46,6 +46,10 @@ noremap k gk
 vmap j gj
 vmap k gk
 
+" allow selecting beyond the text or whitespace of a file while in visual block
+" mode. this makes some operations more consistent in this mode
+set virtualedit=block
+
 " implement some readline shortcuts for the vim command line
 " move to start of line
 cnoremap <c-a> <home>
@@ -61,17 +65,18 @@ map q: <Nop>
 
 " Status line stuff. Nothing fancy!
 function! s:statusline_expr()
+  let buffern = "b%-5.3n"
   let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
   let ro  = "%{&readonly ? '[RO] ' : ''}"
   let ft  = "%{len(&filetype) ? '['.&filetype.'] ' : ''}"
   let fug = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
   let sep = ' %= '
-  let pos = ' %-12(%l : %c%V%) '
+  let pos = ' %-12(l %l, c %c%V%) '
   let pct = ' %P'
 
   " buffer no., filepath(tail), modified?, read-only, filetype, git branch (if
   " relevant), empty space, position in file, percent in file
-  return '%.30f %<'.mod.ro.ft.fug.sep.pos.'%*'.pct
+return buffern.'%.30f %<'.mod.ro.ft.fug.sep.pos.'%*'.pct
 endfunction
 let &statusline = s:statusline_expr()
 set laststatus=2          "always show the status line
