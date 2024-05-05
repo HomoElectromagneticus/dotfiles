@@ -15,6 +15,7 @@ zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
+setopt MENU_COMPLETE
 
 # save 1000s of lines of command history
 HISTFILE=~/.cache/zsh/history
@@ -53,16 +54,9 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey '^xe' edit-command-line
 
-# allow fzf's keybindings
-source /usr/local/Cellar/fzf/0.50.0/shell/key-bindings.zsh
-# this mac uses a "us international" keyboard layout with dead keys (for accent
-# marks etc), so pressing ALT+c produces the c with a tail: ç. I personally 
-# write this character by typing an apostrophe and then typing c  (as in, using
-# the dead keys), so we can just bind this character to the fzf ALT+c function:
-# Note: this means that you cannot type ç in the terminal without calling the 
-# fzf widget! In practice this doesn't really matter since CTRL + t is better.
-# If you really want to call the cd widget, you can type ESC + c.
-# bindkey '^[c' fzf-cd-widget
+# allow fzf's keybindings, but disable ALT+C since it kind of screws up the
+# international keyboard layout thing that I use
+FZF_ALT_C_COMMAND= eval "$(fzf --zsh)"
 
 # allow "cd on quit" for lf
 lfcd () {
