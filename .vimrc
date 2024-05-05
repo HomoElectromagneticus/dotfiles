@@ -56,8 +56,11 @@ cnoremap <c-a> <home>
 " move to end of line
 cnoremap <c-e> <end>
 
-" let typing Q instead of q quit vim as well
-:command Q q
+" redundant keymappings because i make typos constantly
+command! Q q
+command! W w
+command! Wq wq
+command! WQ wq
 
 " turn off the default keybind for opening the list of previous commands in a 
 " small horizontal split. i never do this and it screws me up often enough...
