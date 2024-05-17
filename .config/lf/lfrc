@@ -106,6 +106,9 @@ map X !$f
 map o &mimeopen $f
 map O $mimeopen --ask $f
 
+# map the escape key to "clear selection" as well as the default "u"
+map <esc> unselect 
+
 # some "bookmarks"
 map gC cd ~/.config
 map gD cd ~/Downloads
@@ -196,6 +199,20 @@ cmd open-file-manager-here ${{
 }}
 map f       #unmap f
 map fm open-file-manager-here
+
+# show current directory in window title
+cmd on-cd &{{
+    #'&' commands run silently in background (which is what we want here), but
+    #are not connected to stdout. To make sure our escape sequence still 
+    #reaches stdout we pipe it to /dev/tty
+    printf "\033]0; $PWD\007" > /dev/tty
+}}
+# also run at startup so the directory is always shown in the title
+on-cd
+# we also want to un-set the window title when quitting
+cmd on-quit &{{
+    printf "\033]0; \e\\" > /dev/tty
+}}
 
 # "cd on quit"
 map q %{{
