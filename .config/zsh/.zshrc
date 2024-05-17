@@ -9,9 +9,15 @@ else
     eval "$(gdircolors -b)"
 fi
 
-# Basic auto/tab complete:
+## Autocompletion settings
 autoload -U compinit
 zstyle ':completion:*' menu select
+# allow case-insensitive matching
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# allow the zsh completions to use the same colors as ls. note that we
+# have to use the LS_COLORS variable defined above instead of the
+# default-to-MacOS "LSCOLORS"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
@@ -23,11 +29,6 @@ HISTSIZE=8000
 SAVEHIST=6000
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
-
-# allow the zsh completions to use the same colors as ls. note that we
-# have to use the LS_COLORS variable defined above instead of the
-# default-to-MacOS "LSCOLORS"
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # do stuff with the prompt. show the user, then the current directory
 # (with an ellipsis if the path is too long), then finally a # if the
@@ -43,9 +44,11 @@ setopt extended_glob
 # bind "fn + delete" to forward-delete like it normally is on a mac
 bindkey "^[[3~" delete-char
 
-# bind the home and end keys
-bindkey '^[[H' beginning-of-line
-bindkey '^[[F' end-of-line
+# binding some keys to zle shortcuts (zle is like readline, but for zsh)
+bindkey '^[[1;3C' forward-word      #should be alt + right arrow
+bindkey '^[[1;3D' backward-word     #should be alt + left arrow
+bindkey '^[[C' end-of-line          #should be cmd + right arrow
+bindkey '^[[D' beginning-of-line    #should be cmd + left arrow
 
 # allow <CTRL+x> then <e> to open what's currently on the command line into the
 # editor specified by $VISUAL. this is very similar to the "standard" bash

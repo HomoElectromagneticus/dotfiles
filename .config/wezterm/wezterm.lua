@@ -43,7 +43,7 @@ config.send_composed_key_when_left_alt_is_pressed = true
 config.send_composed_key_when_right_alt_is_pressed = true
 -- other key settings 
 config.keys = {
--- Enabling editing the config file quickly from CMD+, like many Mac programs
+  -- Enabling editing the config file quickly from CMD+, like many Mac programs
   {
     key = ',', mods = 'CMD',
     action = act.SpawnCommandInNewTab {
@@ -57,30 +57,13 @@ config.keys = {
       },
     },
   },
-  -- assigning some readline movement commands to the "standard" MacOS shotcuts
-  -- for details, see http://www.math.utah.edu/docs/info/features_7.html#SEC45
-  -- and https://wezfurlong.org/wezterm/config/lua/keyassignment/SendKey.html
-  -- and https://apple.stackexchange.com/questions/12997/can-home-and-end-keys-be-mapped-when-using-terminal
-  -- go to beginning of line
-  { 
-    key = 'LeftArrow', mods = 'CMD', 
-    action = act.SendKey { key = 'a', mods = 'CTRL'}
+  -- Disable the default binding to hide the application with CMD + h
+  -- this is annoying, I accidentally hit this too often
+  {
+    key = 'h',
+    mods = 'CMD',
+    action = wezterm.action.DisableDefaultAssignment,
   },
-  -- go to end of line
-  { 
-    key = 'RightArrow', mods = 'CMD', 
-    action = act.SendKey { key = 'e', mods = 'CTRL'}
-  }, 
-  -- go to beginning of previous word
-  { 
-    key = 'LeftArrow', mods = 'ALT', 
-    action = act.SendKey { key = 'b', mods = 'ALT'}
-  },
-  -- go to beginning of next word
-  { 
-    key = 'RightArrow', mods = 'ALT', 
-    action = act.SendKey { key = 'f', mods = 'ALT'}
-  }, 
   -- undo the last thing you did (besides filling the line with a previous 
   -- command...)
   { 
