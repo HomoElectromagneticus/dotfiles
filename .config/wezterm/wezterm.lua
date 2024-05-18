@@ -60,8 +60,7 @@ config.keys = {
   -- Disable the default binding to hide the application with CMD + h
   -- this is annoying, I accidentally hit this too often
   {
-    key = 'h',
-    mods = 'CMD',
+    key = 'h', mods = 'CMD',
     action = wezterm.action.DisableDefaultAssignment,
   },
   -- undo the last thing you did (besides filling the line with a previous 
@@ -73,18 +72,27 @@ config.keys = {
   -- Turn off the default CMD-t "make new tab" actions, because i do not like
   -- tabs
   {
-    key = 't',mods = 'CMD',
+    key = 't', mods = 'CMD',
     action = wezterm.action.DisableDefaultAssignment,
   },
   {
-    key = 't',mods = 'CTRL|SHIFT',
+    key = 't', mods = 'CTRL|SHIFT',
     action = wezterm.action.DisableDefaultAssignment,
   },
   {
-    key = 'T',mods = 'CMD|SHIFT',
+    key = 'T', mods = 'CMD|SHIFT',
     action = wezterm.action.DisableDefaultAssignment,
   },
+  -- Use MacOS command + left to send the "home" key
+  {
+    key = 'LeftArrow', mods = 'CMD',
+    action = wezterm.action.SendKey { key = 'Home'},
+  },
+  -- Use MacOS command + right to send the "end" key
+  {
+    key = 'RightArrow', mods = 'CMD',
+    action = wezterm.action.SendKey { key = 'End'},
+  }
 }
-
 -- and finally, return the configuration to wezterm
 return config

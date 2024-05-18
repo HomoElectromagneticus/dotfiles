@@ -1,7 +1,7 @@
 # the variable LS_COLORS is needed by zsh in order to colorize the tab
-# completion stuff correctly. zsh doesn't understand the MacOS / BSD way
-# of doing terminal colors, so we must export the colors the way linux
-# does. we can use gdircolors if we have coreutils installed
+# completion stuff correctly. zsh doesn't understand the MacOS / BSD way of 
+# doing terminal colors, so we must export the colors the way linux does. we 
+# can use gdircolors if we have coreutils installed
 if ! command -v gdircolors &> /dev/null
 then
     export LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
@@ -14,9 +14,8 @@ autoload -U compinit
 zstyle ':completion:*' menu select
 # allow case-insensitive matching
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-# allow the zsh completions to use the same colors as ls. note that we
-# have to use the LS_COLORS variable defined above instead of the
-# default-to-MacOS "LSCOLORS"
+# allow the zsh completions to use the same colors as ls. note that we have to
+# use LS_COLORS defined above instead of the default-to-MacOS LSCOLORS
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zmodload zsh/complist
 compinit
@@ -30,14 +29,13 @@ SAVEHIST=6000
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
 
-# do stuff with the prompt. show the user, then the current directory
-# (with an ellipsis if the path is too long), then finally a # if the
-# user is privileged and a % otherwise. note that % is the default zsh
-# prompt character
+# do stuff with the prompt. show the user, then the current directory (with an 
+# ellipsis if the path is too long), then finally a # if the user is privileged
+# and a % otherwise. note that % is the default zsh prompt character
 PROMPT="%n %(5~|%-1~/…/%3~|%4~)%(!.#.%%) "
 
-# add zmv, which allows for nice file renaming etc with regex also set
-# the extended glob flag so we can use nicer glob patterns
+# add zmv, which allows for nice file renaming etc with regex also set the 
+# extended glob flag so we can use nicer glob patterns
 autoload -Uz zmv
 setopt extended_glob
 
@@ -45,10 +43,12 @@ setopt extended_glob
 bindkey "^[[3~" delete-char
 
 # binding some keys to zle shortcuts (zle is like readline, but for zsh)
-bindkey '^[[1;3C' forward-word      #should be alt + right arrow
-bindkey '^[[1;3D' backward-word     #should be alt + left arrow
-bindkey '^[[C' end-of-line          #should be cmd + right arrow
-bindkey '^[[D' beginning-of-line    #should be cmd + left arrow
+bindkey -e                          #"emacs" keybindings for zle, the vi ones
+                                    #are confusing
+bindkey '^[[1;3C' forward-word      #alt + right arrow
+bindkey '^[[1;3D' backward-word     #alt + left arrow
+bindkey '^[[F' end-of-line          #end key 
+bindkey '^[[H' beginning-of-line    #home key 
 
 # allow <CTRL+x> then <e> to open what's currently on the command line into the
 # editor specified by $VISUAL. this is very similar to the "standard" bash
