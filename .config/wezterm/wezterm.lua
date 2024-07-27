@@ -2,6 +2,9 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
+-- Set the terminal to wezterm (this requires a terminfo file
+term = "wezterm"
+
 -- This table will hold the configuration.
 local config = {}
 
@@ -27,6 +30,9 @@ config.window_padding = {
   top = '0cell',
   bottom = '0cell',
 }
+
+-- Do not ask for confirmation when closing WezTerm
+config.window_close_confirmation = 'NeverPrompt'
 
 -- Honor kitty keyboard protocol: https://sw.kovidgoyal.net/kitty/keyboard-protocol/
 config.enable_kitty_keyboard = true

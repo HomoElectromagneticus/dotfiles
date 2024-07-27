@@ -16,3 +16,6 @@ alias mv="cp -iv"
 
 # alias lfcd to just lfc so we can type a bit less
 alias lfc=lfcd
+
+# create an alias for isync / mbsync
+alias mbsync="mbsync -c ~/.config/isyncrc"

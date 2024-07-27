@@ -26,6 +26,11 @@ set drawbox false
 # clear the files marked for cut or copy upon quitting
 cmd on-quit clear
 
+# show last write time next to files and folders
+set info time
+set infotimefmtnew "2006-01-02 15:04"
+set infotimefmtold "2006-01-02 15:04"
+
 # allow wrapped scrolling
 set wrapscroll true
 
@@ -110,10 +115,11 @@ map O $mimeopen --ask $f
 map <esc> unselect 
 
 # some "bookmarks"
-map gC cd ~/.config
-map gD cd ~/Downloads
-map gW cd ~/Documents/text-vault
-map gM cd '~/music work'
+map gc cd ~/.config
+map gd cd ~/Downloads
+map gw cd ~/Documents/text-vault
+map gm cd '~/music work'
+map gs cd ~/sw
 
 # define a custom 'open' command
 # This command is called when current file is not a directory. You may want to
@@ -126,8 +132,12 @@ cmd open &{{
     esac
 }}
 
-# copy path to clipboard (on MacOS)
-map Y $printf "%s" "$fx" | pbcopy
+# copy files, paths, and directory names to the clipboard
+map y
+map yy copy
+map yp $printf "%s" "$fx" | pbcopy
+# ghead must be used here since the default head on MacOS sucks
+map yd $dirname "$f" | ghead -c -1 | pbcopy
 
 # define a custom 'delete' command (actually moves files and folders to the 
 # system trash)
