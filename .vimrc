@@ -12,9 +12,10 @@ call plug#begin()
 " let vim-plug handle and plugins. Add / enable plugins by adding
 " `Plug 'blahblah/blahblah'` here
 Plug 'mhinz/vim-signify', { 'tag': 'legacy' }
-Plug 'tpope/vim-vinegar'        "improves netrw (file browser) a bit
-Plug 'ziglang/zig.vim'          "official zig plugin
 Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration
+Plug 'tpope/vim-surround'       "operations on parentheses, brackets, html tags
+                                "and other things that 'surround' text
+Plug 'tpope/vim-vinegar'        "improves netrw (file browser) a bit
 Plug 'tpope/vim-fugitive'       "git functions in vim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}     "fancy completion
 Plug 'SirVer/ultisnips'         "snippets (confirm with CTRL + y) note that you
@@ -23,6 +24,7 @@ Plug 'SirVer/ultisnips'         "snippets (confirm with CTRL + y) note that you
 Plug 'lervag/wiki.vim'          "knowledge database / notes thing
 Plug 'lervag/lists.vim'         "makes to do lists a bit simpler
 Plug 'junegunn/goyo.vim'        "distraction-free writing in vim
+Plug 'ziglang/zig.vim'          "official zig plugin
 " color themes
 Plug 'altercation/vim-colors-solarized'
 Plug 'NLKNguyen/papercolor-theme'
@@ -202,7 +204,7 @@ set title
 set titlestring=%-25.55F\ %a%r%m titlelen=74
 set titleold=              "restores normal window title after quitting vim
 
-"try to jump to the last known cursor position when opening a file
+" try to jump to the last known cursor position when opening a file
 function! Go_to_last_known_position() abort " {{{1
   if line("'\"") <= 0 || line("'\"") > line('$')
     return
@@ -213,8 +215,19 @@ function! Go_to_last_known_position() abort " {{{1
     normal! zMzvzz
   endif
 endfunction
-
 autocmd! BufReadPost * call Go_to_last_known_position()
+
+" store undo history in a file to create effectively infinite undo, even
+" beyond saves etc
+if !isdirectory($HOME . "/.vim/undodir")
+    call mkdir($HOME . "/.vim/undodir", "p")
+endif
+set undofile
+set undodir=~/.vim/undodir
+" delete undo history older than 90 days in order to save space 
+let s:undos = split(globpath(&undodir, '*'), "\n")
+call filter(s:undos, 'getftime(v:val) < localtime() - (60 * 60 * 24 * 90)')
+call map(s:undos, 'delete(v:val)')
 
 "" This function allows sending the output of a vim command to a fresh buffer
 " see documentation at: https://gist.github.com/romainl/eae0a260ab9c135390c30cd370c20cd7
