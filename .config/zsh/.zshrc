@@ -1,3 +1,7 @@
+# export LANG so that certain command-line programs respect your preferred
+# language
+export LANG=fr_fr.UTF-8
+
 # the variable LS_COLORS is needed by zsh in order to colorize the tab
 # completion stuff correctly. zsh doesn't understand the MacOS / BSD way of 
 # doing terminal colors, so we must export the colors the way linux does. we 
@@ -33,6 +37,15 @@ setopt SHARE_HISTORY
 # ellipsis if the path is too long), then finally a # if the user is privileged
 # and a % otherwise. note that % is the default zsh prompt character
 PROMPT="%n %(5~|%-1~/…/%3~|%4~)%(!.#.%%) "
+
+# show the date and time on the right of the prompt
+RPROMPT="[%D{%F}|%D{%H:%M}]"
+# do a cute trick to keep the time shown in the prompt up-to-date (will only 
+# update when the window is focused)
+TMOUT=30
+TRAPALRM() {
+    zle reset-prompt
+}
 
 # add zmv, which allows for nice file renaming etc with regex also set the 
 # extended glob flag so we can use nicer glob patterns
