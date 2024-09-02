@@ -26,6 +26,9 @@ set drawbox false
 # clear the files marked for cut or copy upon quitting
 cmd on-quit clear
 
+# kill the server process when there is no client running
+set autoquit true
+
 # show last write time next to files and folders
 set info time
 set infotimefmtnew "2006-01-02 15:04"
