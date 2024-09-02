@@ -11,6 +11,8 @@ call plug#begin()
 
 " let vim-plug handle and plugins. Add / enable plugins by adding
 " `Plug 'blahblah/blahblah'` here
+Plug 'chrisbra/Recover.vim'     "Prompt to show diff when recovering from a vim
+                                "swap file
 Plug 'mhinz/vim-signify', { 'tag': 'legacy' }
 Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration
 Plug 'tpope/vim-surround'       "operations on parentheses, brackets, html tags
