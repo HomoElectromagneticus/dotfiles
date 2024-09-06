@@ -6,7 +6,6 @@ set nocompatible                "in compatible mode, many plugins don't work
 filetype off
 
 " set the runtime path to include fzf(required for fzf plugin) and initialize
-set rtp+=/usr/local/opt/fzf
 call plug#begin()
 
 " let vim-plug handle and plugins. Add / enable plugins by adding
@@ -14,7 +13,9 @@ call plug#begin()
 Plug 'chrisbra/Recover.vim'     "Prompt to show diff when recovering from a vim
                                 "swap file
 Plug 'mhinz/vim-signify', { 'tag': 'legacy' }
-Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'         "fuzzy finder vim integration (we need the line
+                                "above as well
 Plug 'tpope/vim-surround'       "operations on parentheses, brackets, html tags
                                 "and other things that 'surround' text
 Plug 'tpope/vim-vinegar'        "improves netrw (file browser) a bit
@@ -27,6 +28,7 @@ Plug 'lervag/wiki.vim'          "knowledge database / notes thing
 Plug 'lervag/lists.vim'         "makes to do lists a bit simpler
 Plug 'junegunn/goyo.vim'        "distraction-free writing in vim
 Plug 'ziglang/zig.vim'          "official zig plugin
+Plug 'neomutt/neomutt.vim'      "neomutt plugin to help with composing emails
 " color themes
 Plug 'altercation/vim-colors-solarized'
 Plug 'NLKNguyen/papercolor-theme'
