@@ -147,7 +147,6 @@ set sidescrolloff=2
 
 set mouse=a                "mouse wheel scrolls vim and not the term window
 set ttymouse=sgr           "the mouse will work for a large number of columns
-set balloonevalterm        "allows balloons to show up for some (mouse?) events
 
 " settings for searching
 set hlsearch               "highlight my search
