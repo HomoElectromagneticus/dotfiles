@@ -16,7 +16,7 @@ shift + alt - y : yabai -m space --mirror y-axis
 # flip along x-axis
 shift + alt - x : yabai -m space --mirror x-axis
 # toggle floating window on focused window
-shift + alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
+shift + alt - f : yabai -m window --toggle float --grid 4:4:1:1:2:2
 
 ## Modifying window size
 # toggle maximize focused window
@@ -30,9 +30,9 @@ ctrl + alt - b : yabai -m space --balance
 # active. hopefully providing an exit with simply the escape key is enough)
 :: resize @ : yabai -m config active_window_border_color 0xFFFF00FF
 # start resize mode
-default < ctrl + alt - r ; resize
+default < alt - r ; resize
 # exit resize mode
-resize < ctrl + alt - r ; default
+resize < alt - r ; default
 resize < escape ; default
 # resize commands
 resize < left  : yabai -m window --resize left:-50:0; \
@@ -68,10 +68,6 @@ ctrl + alt - l : yabai -m window --warp east
 # move window to display left or right
 shift + alt - s : yabai -m window --display west; yabai -m display --focus west;
 shift + alt - g : yabai -m window --display east; yabai -m display --focus east;
-
-#move window to prev and next space
-shift + alt - p : yabai -m window --space prev;
-shift + alt - n : yabai -m window --space next;
 
 # move window to space #?
 shift + alt - 1 : yabai -m window --space 1;
