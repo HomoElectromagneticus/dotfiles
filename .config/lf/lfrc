@@ -118,11 +118,12 @@ map O $mimeopen --ask $f
 map <esc> unselect 
 
 # some "bookmarks"
+map g/ cd / 
 map gc cd ~/.config
 map gd cd ~/Downloads
-map gw cd ~/Documents/text-vault
 map gm cd '~/music work'
 map gs cd ~/sw
+map gw cd ~/Documents/text-vault
 
 # define a custom 'open' command
 # This command is called when current file is not a directory. You may want to
