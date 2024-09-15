@@ -1,6 +1,21 @@
 # snippets for markdown files
 
-snippet tab "Creates a tablature clef"
+snippet blockquote
+	{% blockquote %}
+	${0:quote}
+	{% endblockquote %}
+
+snippet blockquote-author
+	{% blockquote ${1:author}, ${2:title} %}
+	${0:quote}
+	{% endblockquote %}
+
+snippet blockquote-link
+	{% blockquote ${1:author} ${2:URL} ${3:link_text} %}
+	${0:quote}
+	{% endblockquote %}
+
+snippet tab "Creates a tablature clef, all-fourths guitar"
 	F|-
 	C|-
 	G|-
