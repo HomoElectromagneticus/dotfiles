@@ -24,6 +24,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}     "fancy completion
 Plug 'SirVer/ultisnips'         "snippets (confirm with CTRL + y) note that you
                                 "must run :CocInstall coc-ultisnips for Coc to
                                 "see the snippets
+Plug 'mechatroner/rainbow_csv'  "csv syntax highlighting and other tricks
 Plug 'lervag/wiki.vim'          "knowledge database / notes thing
 Plug 'lervag/lists.vim'         "makes to do lists a bit simpler
 Plug 'junegunn/goyo.vim'        "distraction-free writing in vim
@@ -296,7 +297,7 @@ let g:zig_fmt_autosave = 0              "disable automatic formatting on save
 " in ~/.vim/coc-settings.json and json files can't really be commented)
 " specify the path to node in case vim is launched by something else than
 " the terminal
-let g:coc_node_path = '/usr/local/bin/node'
+let g:coc_node_path = '/opt/homebrew/bin/node'
 " GoTo code navigation (replaces default vim implementation)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
