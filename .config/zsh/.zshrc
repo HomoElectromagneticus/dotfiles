@@ -94,4 +94,4 @@ lfcd () {
 
 # load syntax highlighting in the zsh shell (should be the last thing in the 
 # file)
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null

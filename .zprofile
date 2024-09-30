@@ -1,5 +1,9 @@
 # Profile file, runs on login. Environmental variables are set here.
 
+# needed to make homebrew happy
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# add the user binary file directory to the path
 if [ -d "$HOME/bin" ] ; then
     export PATH="$HOME/bin:$PATH"
 fi
@@ -24,7 +28,7 @@ ZSH_COMPDUMP="$HOME/.cache/zsh/zcompcache"
 export HOMEBREW_NO_ANALYTICS=1
 
 # set the default editor to vim
-export EDITOR=/usr/local/bin/vim
+export EDITOR=/opt/homebrew/bin/vim
 export VISUAL="$EDITOR"
 
 # tell wezterm to find its config within the .config folder
