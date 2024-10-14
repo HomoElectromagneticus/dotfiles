@@ -1,17 +1,30 @@
 {
-  "languageserver": {
-    "zig": {
-      "command": "/usr/local/bin/zls",
-      "zig.path": "zls",
-      "zig.enabled": true,
-      "zig.startUpMessage": true,
-      "rootPatterns": ["build.zig"],
-      "trace.server": "verbose",
-      "filetypes": ["zig"]
-    }
-  },
+  // generic settings go here
+  // inlay hints are annotations within the code, which show variable types or 
+  // parameter names
+  "inlayHint.enable": true,
+  "semanticTokens.enable": true,
+  // select the first auto-complete suggestion with CTRL-N or P
   "suggest.noselect": true,
-  "inlayHint.enable": false,
-  "pyright.inlayHints.variableType": false,
-  "pyright.inlayHints.functionReturnTypes": false,
+  
+  // all language servers go within this block
+  "languageserver": {
+    // for the zig language server (zls), the binary is at ~/bin/zls, and 
+    // symlinked to /usr/local/bin/zls. this should allow Coc to see it. note 
+    // that zls is not managed by a package manager like homebrew, apt, etc. 
+    // it's manual install and update only (for now). the github page is:
+    // https://github.com/zigtools/zls
+    "zls": {
+      "command": "zls",
+      "filetypes": [ "zig", "zon" ]
+    },
+    // the awk language server is taken care of by the npm package manager 
+    // (normally included when installing node). the github page is: 
+    // https://github.com/Beaglefoot/awk-language-server
+    "awk": {
+      "command": "awk-language-server",
+      "args": [],
+      "filetypes": ["awk"]
+    }
+  }
 }

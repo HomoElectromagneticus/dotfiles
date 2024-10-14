@@ -121,7 +121,7 @@ map <esc> unselect
 map g/ cd / 
 map gc cd ~/.config
 map gd cd ~/Downloads
-map gm cd '~/music work'
+map gm cd ~/music-work
 map gs cd ~/sw
 map gw cd ~/Documents/text-vault
 
@@ -147,7 +147,7 @@ map yd $dirname "$f" | ghead -c -1 | pbcopy
 # system trash)
 cmd delete ${{
     set -f
-    printf "$fx\n"
+    printf "\n\n$fx\n"
     printf "delete?[y/N]"
     read ans
     case "$ans" in

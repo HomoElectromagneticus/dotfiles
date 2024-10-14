@@ -18,6 +18,10 @@ end
 -- Set color scheme
 config.color_scheme = 'Solarized (light) (terminal.sexy)'
 
+-- set opacity
+config.window_background_opacity = 0.97
+config.text_background_opacity = 1
+
 -- Font settings
 config.font = wezterm.font 'Berkeley Mono'
 config.font_size = 16.0

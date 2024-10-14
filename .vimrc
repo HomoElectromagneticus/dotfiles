@@ -293,10 +293,11 @@ let g:netrw_winsize = 28
 " zig plugin settings
 let g:zig_fmt_autosave = 0              "disable automatic formatting on save
 
-" Conqueror of completion config (note that a lot of Coc's settings are 
-" in ~/.vim/coc-settings.json and json files can't really be commented)
-" specify the path to node in case vim is launched by something else than
-" the terminal
+" Conqueror of completion config 
+" note that Coc can complain that it cannot find the language server executable
+" and then work perfectly fine anyway. it's probably a bug...
+" specify the path to node in case vim is launched by something else than the 
+" terminal
 let g:coc_node_path = '/opt/homebrew/bin/node'
 " GoTo code navigation (replaces default vim implementation)
 nmap <silent> gd <Plug>(coc-definition)
