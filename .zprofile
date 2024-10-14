@@ -33,3 +33,9 @@ export VISUAL="$EDITOR"
 
 # tell wezterm to find its config within the .config folder
 export WEZTERM_CONFIG_FILE=$HOME/.config/wezterm/wezterm.lua
+
+# tell notmuch to find its config file within the .config folder
+export NOTMUCH_CONFIG=$HOME/.config/notmuch/notmuch-config
+
+# tell less to store its history in .cache
+export LESSHISTFILE=$HOME/.cache/less/lesshst
