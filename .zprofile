@@ -28,7 +28,7 @@ ZSH_COMPDUMP="$HOME/.cache/zsh/zcompcache"
 export HOMEBREW_NO_ANALYTICS=1
 
 # set the default editor to vim
-export EDITOR=/opt/homebrew/bin/vim
+export EDITOR=/opt/homebrew/bin/hx
 export VISUAL="$EDITOR"
 
 # tell wezterm to find its config within the .config folder
@@ -39,3 +39,6 @@ export NOTMUCH_CONFIG=$HOME/.config/notmuch/notmuch-config
 
 # tell less to store its history in .cache
 export LESSHISTFILE=$HOME/.cache/less/lesshst
+
+# add LLVM tools to the path (useful for debugging software etc)
+export PATH=$(brew --prefix)/opt/llvm/bin:$PATH

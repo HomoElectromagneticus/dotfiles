@@ -1,0 +1,8 @@
+[[language]]
+name = "markdown"
+soft-wrap.enable = true
+language-servers = [ {name = "marksman"}, {name = "ltex"} ]
+
+[language-server.ltex]
+command = "/Users/ryan/bin/ltex-ls-plus-18.3.0/bin/ltex-ls-plus"
+config = { ltex.language = "fr" }

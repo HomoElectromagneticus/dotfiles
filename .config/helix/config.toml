@@ -1,0 +1,67 @@
+theme = 'papercolor-light'
+
+[editor]
+rulers = [80]
+auto-pairs = false
+
+[editor.gutters]
+layout = ["diff", "line-numbers", "spacer"]
+
+[editor.cursor-shape]
+insert = "bar"
+select = "underline"
+
+[editor.statusline]
+left = ["mode", "spinner", "separator", "version-control", "separator", "file-name", "file-type", "read-only-indicator", "file-modification-indicator"]
+center = []
+right = ["diagnostics", "selections", "position", "separator", "position-percentage"]
+mode.normal = "NOR"
+mode.insert = "INS"
+mode.select = "SEL"
+
+[editor.soft-wrap]
+# don't show anything when soft wrapping a line
+wrap-indicator = ""
+# when enabled, soft wrap at the window's text width. for most cases, this is
+# the full-width of the window. languages can override this, see the
+# languages.toml file
+wrap-at-text-width = true
+ 
+[editor.lsp]
+# in-line hints about variable types, function parameters, etc
+display-inlay-hints = true
+
+# KEY BINDINGS, NORMAL MODE
+[keys.normal]
+# vim muscle memory ;-)
+0 = "goto_line_start"
+G = "goto_file_end"
+# in case we forgot how to stop selecting things
+esc = ["collapse_selection", "keep_primary_selection"]
+
+[keys.normal.g]
+# more logical now that the default "ge" is no longer useful thanks to the
+# binding "G" above
+e = "goto_line_end"
+
+[keys.normal.'\']
+# shortcut for my personal wiki
+w = ":open ~/Documents/text-vault/index.md"
+
+# KEY BINDINGS, SELECT MODE
+[keys.select]
+# vim muscle memory ;-)
+0 = "goto_line_start"
+G = "goto_file_end"
+# in case we forgot how to stop selecting things
+esc = ["collapse_selection", "keep_primary_selection"]
+
+[keys.select.g]
+# more logical now that the default "ge" is no longer useful thanks to the
+# binding "G" above
+e = "goto_line_end"
+
+# KEY BINDINGS, INSERT MODE
+[keys.insert]
+# Escape the madness! No more fighting with the cursor! Or with multiple cursors!
+esc = ["collapse_selection", "normal_mode"]
