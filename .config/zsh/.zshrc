@@ -47,21 +47,16 @@ TRAPALRM() {
     zle reset-prompt
 }
 
-# add zmv, which allows for nice file renaming etc with regex also set the 
-# extended glob flag so we can use nicer glob patterns
-autoload -Uz zmv
-setopt extended_glob
-
 # bind "fn + delete" to forward-delete like it normally is on a mac
 bindkey "^[[3~" delete-char
 
 # binding some keys to zle shortcuts (zle is like readline, but for zsh)
 bindkey -e                          #"emacs" keybindings for zle, the vi ones
                                     #are confusing
-bindkey '^[[1;3C' forward-word      #alt + right arrow
-bindkey '^[[1;3D' backward-word     #alt + left arrow
-bindkey '^[[F' end-of-line          #end key 
-bindkey '^[[H' beginning-of-line    #home key 
+bindkey "\e[1;3D" backward-word     # ⌥+←
+bindkey "\e[1;3C" forward-word      # ⌥+→
+bindkey "^[[1;9D" beginning-of-line # cmd+← (kind of like "home"
+bindkey "^[[1;9C" end-of-line       # cmd+→ (kind of like "end")
 
 # allow <CTRL+x> then <e> to open what's currently on the command line into the
 # editor specified by $VISUAL. this is very similar to the "standard" bash
@@ -75,19 +70,10 @@ bindkey '^xe' edit-command-line
 FZF_ALT_C_COMMAND= eval "$(fzf --zsh)"
 
 # allow "cd on quit" for lf
-lfcd () {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        if [ -d "$dir" ]; then
-            if [ "$dir" != "$(pwd)" ]; then
-                cd "$dir"
-            fi
-        fi
-    fi
-}
+LFCD="$HOME/.config/lf/lfcd.sh"
+if [ -f "$LFCD" ]; then
+    source "$LFCD"
+fi
 
 # load aliases file if it exists
 [ -f "$HOME/.config/aliasesrc" ] && source "$HOME/.config/aliasesrc"

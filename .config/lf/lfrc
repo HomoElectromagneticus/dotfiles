@@ -37,8 +37,8 @@ set infotimefmtold "2006-01-02 15:04"
 # allow wrapped scrolling
 set wrapscroll true
 
-# refresh the list every one second
-set period 1
+# monitor the filesystem for changes and update accordingly
+set watch true
 
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
@@ -59,8 +59,21 @@ set ifs "\n"
 # leave some space at the top and the bottom of the screen
 set scrolloff 10
 
-# Use the `dim` attribute instead of underline for the cursor in the preview pane
-set cursorpreviewfmt "\033[7;2m"
+# custom cursor settings that react when the host window gains / loses focus
+# hook command which is invoked when the terminal gains focus
+cmd on-focus-gained :{{
+    set cursorparentfmt "\033[7m"
+    set cursoractivefmt "\033[7m"
+    set cursorpreviewfmt "\033[4m"
+}}
+# hook command which is invoked when the terminal loses focus
+cmd on-focus-lost :{{
+    set cursorparentfmt "\033[7;2m"
+    set cursoractivefmt "\033[7;2m"
+    set cursorpreviewfmt "\033[4;2m"
+}}
+# set initial values upon startup
+on-focus-gained
 
 # change the rename behavior to be more like vim
 map r :rename; cmd-delete-home          #replace filename (excluding filename)
@@ -228,9 +241,5 @@ cmd on-quit &{{
     printf "\033]0; \e\\" > /dev/tty
 }}
 
-# "cd on quit"
-map q %{{
-  lf -remote "send $id :cd '$OLDPWD'; quit"
-}}
 map Q quit      #just in case shift is held while trying to quit
 cmd q quit      #just in case vim muscle memory takes over
