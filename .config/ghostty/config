@@ -1,0 +1,14 @@
+font-family = "Berkeley Mono"
+font-size = 15.5
+theme = "iTerm2 Solarized Light"
+
+background-opacity = 0.93
+background-blur-radius = 10
+
+shell-integration-features = no-cursor
+
+adjust-underline-thickness = -1
+
+auto-update = "off"
+
+macos-titlebar-style = "native"
