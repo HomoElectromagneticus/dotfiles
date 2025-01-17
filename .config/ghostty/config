@@ -6,9 +6,13 @@ background-opacity = 0.93
 background-blur-radius = 10
 
 shell-integration-features = no-cursor
+cursor-style-blink = true
 
 adjust-underline-thickness = -1
 
 auto-update = "off"
 
 macos-titlebar-style = "native"
+
+selection-background = AAAAAA
+selection-foreground = 111111
