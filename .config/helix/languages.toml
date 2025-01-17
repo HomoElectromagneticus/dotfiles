@@ -1,8 +1,32 @@
 [[language]]
 name = "markdown"
 soft-wrap.enable = true
-language-servers = [ {name = "marksman"}, {name = "ltex"} ]
+language-servers = [ {name = "marksman"}, {name = "ltex"}, {name = "scls"} ]
 
+# this language server is installed locally, must be managed manually
+[[language]]
+name = "zig"
+language-servers = [ {name = "zls" }, {name = "scls"} ]
+
+# this language server is managed by npm
+[[language]]
+name = "awk"
+language-servers = [ {name = "awk-language-server" }, {name = "scls"} ]
+
+# this language server is managed by homebrew
+[[language]]
+name = "bash"
+language-servers = [ {name = "bash-language-server" }, {name = "scls"} ]
+
+# this language server is managed by homebrew
 [language-server.ltex]
-command = "/Users/ryan/bin/ltex-ls-plus-18.3.0/bin/ltex-ls-plus"
+command = "/opt/homebrew/bin/ltex-ls-plus"
 config = { ltex.language = "fr" }
+
+# this language server is installed locally, must be managed manually
+[language-server.scls]
+command = "simple-completion-language-server"
+[language-server.scls.config]
+max_completion_items = 50    # set max completion results len for each group: words, snippets, unicode-input
+feature_words = true         # enable completion by word
+feature_paths = false        # path completion is handled by helix natively
