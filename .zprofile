@@ -42,3 +42,8 @@ export LESSHISTFILE=$HOME/.cache/less/lesshst
 
 # add LLVM tools to the path (useful for debugging software etc)
 export PATH=$(brew --prefix)/opt/llvm/bin:$PATH
+
+# add simple-completion-language-server to the path (a basic LSP for the helix
+# editor)
+export PATH=$HOME/.cargo/bin:$PATH
+

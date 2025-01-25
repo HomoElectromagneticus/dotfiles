@@ -21,9 +21,8 @@ right = ["diagnostics", "selections", "position", "separator", "position-percent
 [editor.soft-wrap]
 # don't show anything when soft wrapping a line
 wrap-indicator = ""
-# when enabled, soft wrap at the window's text width. for most cases, this is
-# the full-width of the window. languages can override this, see the
-# languages.toml file
+# soft wrap at the window's text width. for most cases, this is the full width
+# of the window. languages can override this, see the languages.toml file
 wrap-at-text-width = true
  
 [editor.lsp]
@@ -46,6 +45,14 @@ e = "goto_line_end"
 # shortcut for my personal wiki
 w = ":open ~/Documents/text-vault/index.md"
 
+# double-tap '[' to go up a markdown heading
+[keys.normal.'[']
+'[' = '@?^#+\s+.*$<ret>'
+
+# double-tap ']' to go down a markdown heading
+[keys.normal.']']
+']' = '@/^#+\s+.*$<ret>'
+
 # KEY BINDINGS, SELECT MODE
 [keys.select]
 # vim muscle memory ;-)
@@ -56,7 +63,3 @@ G = "goto_file_end"
 # binding "G" above
 e = "goto_line_end"
 
-# KEY BINDINGS, INSERT MODE
-[keys.insert]
-# in case we forget how to get stop selecting things
-esc = ["collapse_selection", "normal_mode"]

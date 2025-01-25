@@ -16,3 +16,5 @@ macos-titlebar-style = "native"
 
 selection-background = AAAAAA
 selection-foreground = 111111
+
+mouse-hide-while-typing = true
