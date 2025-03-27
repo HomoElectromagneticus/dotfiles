@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# 1. Search for text in files using Ripgrep
+# 2. Interactively narrow down the list using Ripgrep (using reload action)
+# 3. Open the file in helix
+RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+INITIAL_QUERY="${*:-}"
+fzf --style full \
+    --ansi --disabled --query "$INITIAL_QUERY" \
+    --bind "start:reload:$RG_PREFIX {q}" \
+    --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+    --delimiter : \
+    --preview 'cat -n {1}' \
+    --preview-window 'up,60%,border-bottom,+{2}+3/3,~0' \
+    --bind 'enter:become(hx {1}:{2})'
