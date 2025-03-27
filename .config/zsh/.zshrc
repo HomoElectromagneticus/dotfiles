@@ -30,7 +30,9 @@ setopt MENU_COMPLETE
 HISTFILE=~/.cache/zsh/history
 HISTSIZE=8000
 SAVEHIST=6000
+# use a "rolling" history
 setopt APPEND_HISTORY
+# history is shared across sessions
 setopt SHARE_HISTORY
 
 # do stuff with the prompt. show the user, then the current directory (with an 
@@ -67,7 +69,8 @@ bindkey '^xe' edit-command-line
 
 # allow fzf's keybindings, but disable ALT+C since it kind of screws up the
 # international keyboard layout thing that I use
-FZF_ALT_C_COMMAND= eval "$(fzf --zsh)"
+export FZF_ALT_C_COMMAND='source <(fzf --zsh)'
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 
 # allow "cd on quit" for lf
 LFCD="$HOME/.config/lf/lfcd.sh"
