@@ -35,6 +35,10 @@ display-inlay-hints = true
 G = "goto_file_end"
 # in case we forgot how to stop selecting things
 esc = ["collapse_selection", "keep_primary_selection"]
+x = ["extend_line", "select_mode"] # fantastic mapping, teaches you to use select_mode in the process, allowing precise selection, at the cost of one key to exit
+# increment and decrement what's under the selection
+minus = "decrement" # 'minus' not '-', for parsing reasons
+"=" = "increment" # default is format_selections via LSP
 
 [keys.normal.g]
 # more logical now that the default "ge" is no longer useful thanks to the
