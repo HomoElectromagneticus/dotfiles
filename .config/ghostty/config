@@ -1,10 +1,18 @@
+## THEME SETTINGS
 font-family = "Berkeley Mono"
-font-size = 15.5
+font-size = 15
 theme = "iTerm2 Solarized Light"
+# extend the background color to the edges when programs take over the terminal
+# (think of editors like vim with their own color schemes)
+window-padding-color = extend
+# add a custom shader to add noise to the terminal - makes it a bit easier on
+# the eyese
+custom-shader = ./noise.glsl
+# setting opacity will break the shader
+#background-opacity = 0.93
+#background-blur-radius = 10
 
-background-opacity = 0.93
-background-blur-radius = 10
-
+## OTHER SETTINGS
 shell-integration-features = no-cursor
 cursor-style-blink = true
 
@@ -18,3 +26,4 @@ selection-background = AAAAAA
 selection-foreground = 111111
 
 mouse-hide-while-typing = true
+
