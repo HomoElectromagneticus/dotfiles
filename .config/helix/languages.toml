@@ -3,7 +3,7 @@ name = "markdown"
 soft-wrap.enable = true
 language-servers = [ {name = "marksman"}, {name = "ltex"}, {name = "scls"} ]
 
-# this language server is installed locally, must be managed manually
+# this language server is managed by homebrew
 [[language]]
 name = "zig"
 language-servers = [ {name = "zls" }, {name = "scls"} ]

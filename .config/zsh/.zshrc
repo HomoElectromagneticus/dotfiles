@@ -71,6 +71,7 @@ bindkey '^xe' edit-command-line
 # international keyboard layout thing that I use
 export FZF_ALT_C_COMMAND='source <(fzf --zsh)'
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+source <(fzf --zsh)
 
 # allow "cd on quit" for lf
 LFCD="$HOME/.config/lf/lfcd.sh"
