@@ -224,6 +224,7 @@ map F fzf_jump
 cmd open-file-manager-here ${{
   open $PWD
 }}
+
 map f       #unmap f
 map fm open-file-manager-here
 
@@ -240,6 +241,12 @@ on-cd
 cmd on-quit &{{
     printf "\033]0; \e\\" > /dev/tty
 }}
+
+# change the default behavior of spacebar from "select" to preview like in the
+# macOS finder
+map <space> %qlmanage -p $f
+# then make t the shortcut for select toggle
+map t :toggle; down
 
 map Q quit      #just in case shift is held while trying to quit
 cmd q quit      #just in case vim muscle memory takes over
