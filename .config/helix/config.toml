@@ -24,6 +24,10 @@ wrap-indicator = ""
 # soft wrap at the window's text width. for most cases, this is the full width
 # of the window. languages can override this, see the languages.toml file
 wrap-at-text-width = true
+
+[editor.indent-guides]
+render = true
+character = "┊"
  
 [editor.lsp]
 # in-line hints about variable types, function parameters, etc

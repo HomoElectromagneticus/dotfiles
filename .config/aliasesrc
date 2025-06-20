@@ -1,8 +1,11 @@
-# alias "ls" to run "gls --color --group-directories-first" (note that 
-# this assumes gls is available on mac via brew coreutils)
-alias ls="gls --color --group-directories-first"
+# alias "ls" to run eza, which is very much like ls, but provides highlighting
+# fo permissions, and lets us have a nice header at the top to remind us which
+# column is which. by default, eza also does not show the . and .. entries,
+# which is nice
+alias ls="eza --group-directories-first"
 
-# alias "ll" to run "ls -alh"
+# alias ll to run "eza -lah --group-directories-first". this is kind of abusing
+# the alias, but whatever 
 alias ll="ls -lah"
 
 # alias "grep" to run "grep --color"

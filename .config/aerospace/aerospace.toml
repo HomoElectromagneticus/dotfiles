@@ -102,8 +102,9 @@ cmd-h = [] # Disable "hide application"
 cmd-alt-h = [] # Disable "hide others"
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-alt-slash = 'layout tiles horizontal vertical'
-alt-comma = 'layout accordion horizontal vertical'
+# tiling (repeated use of the hotkey cylces between horizontal and vertical)
+alt-e = 'layout tiles horizontal vertical'
+# vertical accordion (layout stacking like in i3)
 alt-s = 'layout v_accordion' # 'layout stacking' in i3
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
@@ -148,7 +149,6 @@ alt-z = 'layout tiles horizontal'
 # toggle between floating and tiling for the currently-focused window
 alt-f = 'layout floating tiling'
 
-
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = 'mode service'
 
@@ -165,7 +165,6 @@ alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
-
 
 # ignore certain applications for tiling
 # protonvpn
@@ -184,3 +183,16 @@ if.app-id = "com.colliderli.iina"
 [[on-window-detected]]
 if.app-id = "org.libreoffice.script"
     run = "layout tiling"
+
+# tweak 1 for the orion browser (normally my web browser is on desktop 3)
+[[on-window-detected]]
+if.window-title-regex-substring = "Orion Preview"
+run = [
+    "move-node-to-workspace 3",
+]
+
+# tweak 2 for the orion browser (normally my web browser is on desktop 3)
+[[on-window-detected]]
+if.app-id = "com.kagi.kagimacOS"
+    run = "move-node-to-workspace 3"
+
