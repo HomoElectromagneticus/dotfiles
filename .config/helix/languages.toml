@@ -1,7 +1,8 @@
+# marksman is managed via homebrew
 [[language]]
 name = "markdown"
 soft-wrap.enable = true
-language-servers = [ {name = "marksman"}, {name = "ltex"}, {name = "scls"} ]
+language-servers = [ {name = "marksman"}, {name = "ltex-fr"}, {name = "scls"} ]
 
 # this language server is managed by homebrew
 [[language]]
@@ -19,9 +20,12 @@ name = "bash"
 language-servers = [ {name = "bash-language-server" }, {name = "scls"} ]
 
 # this language server is managed by homebrew
-[language-server.ltex]
+[language-server.ltex-fr]
 command = "/opt/homebrew/bin/ltex-ls-plus"
 config = { ltex.language = "fr" }
+[language-server.ltex-en]
+command = "/opt/homebrew/bin/ltex-ls-plus"
+config = { ltex.language = "en-CA" }
 
 # this language server is installed locally, must be managed manually
 [language-server.scls]
