@@ -8,9 +8,6 @@ if [ -d "$HOME/bin" ] ; then
     export PATH="$HOME/bin:$PATH"
 fi
 
-# needed for microchip's IDE to work
-export PATH="$PATH:"/Applications/microchip/xc8/v2.32/bin""
-
 # add /usr/local/sbin to $PATH
 export PATH="/usr/local/sbin:$PATH"
 
@@ -27,12 +24,9 @@ ZSH_COMPDUMP="$HOME/.cache/zsh/zcompcache"
 # prevent homebrew from sending any analytics data
 export HOMEBREW_NO_ANALYTICS=1
 
-# set the default editor to vim
+# set the default editor to helix
 export EDITOR=/opt/homebrew/bin/hx
 export VISUAL="$EDITOR"
-
-# tell wezterm to find its config within the .config folder
-export WEZTERM_CONFIG_FILE=$HOME/.config/wezterm/wezterm.lua
 
 # tell notmuch to find its config file within the .config folder
 export NOTMUCH_CONFIG=$HOME/.config/notmuch/notmuch-config
@@ -46,4 +40,7 @@ export PATH=$(brew --prefix)/opt/llvm/bin:$PATH
 # add simple-completion-language-server to the path (a basic LSP for the helix
 # editor)
 export PATH=$HOME/.cargo/bin:$PATH
+
+# make scrolling work for delta (used for looking at git diffs)
+export DELTA_PAGER="less -R --mouse"
 
