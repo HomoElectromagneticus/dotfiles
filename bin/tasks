@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-# 1. Search for "to do" list items in files using Ripgrep
-# 2. Interactively narrow down the list using Ripgrep (using reload action)
-# 3. Open the file in helix
+# 1. Navigate to the directory where tasks will be found
+# 2. Search for "to do" list items in files using Ripgrep
+# 3. Interactively narrow down the list using Ripgrep (using reload action)
+# 4. Open the file in helix
+cd $HOME/Documents/text-vault
 RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case"
 INITIAL_QUERY="${*:-\- \[ \]}"
 fzf --style full \
