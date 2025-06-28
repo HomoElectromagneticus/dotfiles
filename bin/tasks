@@ -2,16 +2,14 @@
 
 # 1. Navigate to the directory where tasks will be found
 # 2. Search for "to do" list items in files using Ripgrep
-# 3. Interactively narrow down the list using Ripgrep (using reload action)
+# 3. Filter the results with fzf
 # 4. Open the file in helix
 cd $HOME/Documents/text-vault
-RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case"
-INITIAL_QUERY="${*:-\- \[ \]}"
+rg --line-number --no-heading --color=always --smart-case "${*:-^\s?\- \[ \]}" |
 fzf --style full \
-    --ansi --disabled --query "$INITIAL_QUERY" \
-    --bind "start:reload:$RG_PREFIX {q}" \
-    --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+    --ansi \
     --delimiter : \
+    --wrap \
     --preview 'cat -n {1}' \
     --preview-window 'up,60%,border-bottom,+{2}+3/3,~0' \
     --bind 'enter:become(hx {1}:{2})'
